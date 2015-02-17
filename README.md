@@ -17,7 +17,7 @@ Cheers for any help!
 
 - [Housekeeping](Chapter-0.md) - FIRST DRAFT
 - [Variables and expressions](Chapter-1.md) - FIRST DRAFT
-- [Control structures](Chapter-2.md) - DRAFT IN PROGRESS
+- [Control structures](Chapter-2.md) - FIRST DRAFT
 - [Built-in types](Chapter-3.md) - FIRST DRAFT
 - [Components](Chapter-4.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
 - [Components cont'ed](Chapter-5.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
