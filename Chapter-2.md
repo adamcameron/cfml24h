@@ -457,7 +457,75 @@ It's important to note that the only supported delimiter is a comma.
 
 ### break and continue ###
 
-[TBC]
+As I've already used a `break` in one of my examples above, I should actually explain what it does, I guess.
+
+#### break ####
+
+A `break` statement will exit the current loop statement, resuming processing with the first statement after the loop block:
+
+````cfc
+for (i=1; i <= 5; i++){
+	writeOutput("Before break: #i#<br>");
+	break;
+	writeOutput("After break: #i#<br>");
+}
+writeOutput("After loop<br>");
+````
+
+The output here is:
+
+````
+Before break: 1
+After loop
+````
+
+So processing enters the loop as per usual, but when it encounters the `break`, the loop is exited completely. Sometimes one only needs to process a loop until some certain condition is met (say: finding a value in an array), at which point in time one doesn't need to check the rest of the array, so one can break out of the loop. There is generally better ways of achieving this end, but that's the most common use case.
+
+#### continue ####
+
+On the other hand, `continue` simply exits from the current *iteration* of the loop, not the entire loop, eg:
+
+````cfc
+for (i=1; i <= 5; i++){
+	writeOutput("Before break: #i#<br>");
+	continue;
+	writeOutput("After break: #i#<br>");
+}
+writeOutput("After loop<br>");
+````
+
+The output for this one is:
+
+````
+Before break: 1
+Before break: 2
+Before break: 3
+Before break: 4
+Before break: 5
+After loop
+````
+
+Note that we hit *all* of the "before" messages - so the looping is still running - but the `continue` exits the given iteration, resuming processing at the top of the loop for the next iteration.
+
+When would one want to do this? Say one has a an array with numbers in it. One might only want to process the array element if it is an even number, but one does want to process *all* the even numbers in the array:
+
+````cfc
+for (i=1; i <= 10; i++){
+	if (i  MOD 2){ // if there's a remainder it's an odd number, so we're not interested
+		continue;
+	}
+	// process the even number
+	writeOutput(i);
+}
+````
+
+In this example the output is:
+
+````
+246810
+````
+
+Right. Back to the actual looping constructs...
 
 
 ### while ###
@@ -700,12 +768,359 @@ function(element, index, array)
 
 ## Abstracting code ##
 
-### include files ###
+The third aspect of flow control is the various techniques of refactoring pieces of code out of the mainline code execution. One does this for one of two reasons, generally:
 
-### modules ###
+* code re-use
+* code organisation
 
-### functions ###
+A well-written piece of code does one thing, and in a self-contained fashion. This facilitates refactoring that piece of code out of the mainline code into a separate file or function so the code can then be re-used in other situations where the functionality is appropriate.
 
-### classes ###
+Even if the code is distinctly one-use - which is often the case, and there's nothing wrong with that - refactoring out of the mainline to make the code cleaner ([SEE APPROPRIATE CHAPTER]) is still something to strive for.
 
-TBC
+Any given piece of code should do one thing. As part of doing that it might call in other code to achieve that one thing, but the detail of performing those substeps should be abstracted-out into a separate location.
+
+CFML offers a few different ways of factoring sections of logic out of the mainline code, for re-use and organisation.
+
+### Include files ###
+
+The  most basic way of factoring-out code from one file into another is using `include`. `include` facilitates executing code from one file from within another file, eg:
+
+main.cfm:
+````cfc
+// this code will run first
+include "myInclude.cfm";
+// this code will run third
+````
+
+myInclude.cfm
+````cfc
+// this code will run second
+````
+
+This allows us to break a large file into smaller files. Let's say we start with a single monolithic file, homepage.cfm:
+
+````cfc
+// header
+// code
+// takes
+// 20 lines
+// ...
+// of code
+
+
+// main body
+// is
+// another
+// 100 lines
+// ...
+// of code
+
+
+// and the footer
+// is 10 lines
+// ...
+// of code
+````
+
+There's clearly three sections of code there, which quite reasonably are needed to define the  home page, but within that home page are discrete chunks of logic / mark-up. We could refactor that homepage.cfm from 130 lines of code down to three:
+
+````cfc
+include "header.cfm";
+include "body.cfm";
+include "footer.cfm";
+````
+
+And simply break down the code thus:
+
+````cfc
+// header.cfm
+// header
+// code
+// takes
+// 20 lines
+// ...
+// of code
+````
+
+````cfc
+// body.cfm
+// main body
+// is
+// another
+// 100 lines
+// ...
+// of code
+````
+
+````cfc
+// footer.cfm
+// and the footer
+// is 10 lines
+// ...
+// of code
+````
+
+So the homepage.cfm code now just describes what comprises the home page, but the implementation detail has been factored out into more  wieldy chunks. If one has to do some maintenance or enhancements to the header, one only needs to work on a smaller file with just the 20 lines of header code in it. Similarly if maintaining the main body, one focuses on just the code in body.cfm.
+
+This also sets one up nicely for creating other pages which need the same header and footer: they can simmply include those files too.
+
+When using `include` it is almost as if the CFML engine inserts the code from the included file into the file including it, and then executes the code as one piece. This is similar to how C implements the `#include` directive. This is not quite what happens. The CFML compiler compiles the included file separately and *before* it's included into the file including it. Then the code is executed. This means the CFML code in an included file needs to be syntactically complete so it can be compiled. Here's an example to demonstrate:
+
+Original code:
+````cfc
+switch (colour){
+	case "red" :
+		writeOutput("FF0000");
+	break;
+	case "green" :
+		writeOutput("00FF00");
+	break;
+	case "blue" :
+		writeOutput("0000FF");
+	break;
+}
+````
+
+Attempt to refactor code:
+````cfc
+switch (colour){
+	include "cases.cfm";
+}
+````
+
+cases.cfm
+````cfc
+case "red" :
+	writeOutput("FF0000");
+break;
+case "green" :
+	writeOutput("00FF00");
+break;
+case "blue" :
+	writeOutput("0000FF");
+break;
+````
+
+This is illegal because neither file is left syntactically correct. Lucee gives this compile error:
+
+````
+invalid construct in switch statement
+````
+
+And ColdFision gives this (slightly clearer) one:
+
+````
+Only case: or default: statements may be immediately contained by a switch statement.
+````
+
+cases.cfm also will not compile:
+
+````
+Missing [;] or [line feed] after expression
+````
+
+(Lucee cannot even work out what the code is supposed to be doing here, so the error message is a bit misleading).
+
+When the code *does* compile, it's important to observe that the included code will run in the same memory context as the code that includes it. So variables set in the main code will be directly available in the included file, and variables set or changed in the included file will also be available in the main code after the include completes.
+
+EG:
+
+main.cfm
+````cfc
+myVar = "set in main.cfm<br>"; // outputs "set in main.cfm"
+writeOutput(myVar);
+
+include "myInclude.cfm";
+
+writeOutput(myVar); // outputs "updated in myInclude.cfm"
+````
+
+myInclude.cfm
+````cfc
+writeOutput(myVar); // outputs "set in main.cfm"
+
+myVar = "updated in myInclude.cfm<br>";
+````
+
+The output of this is:
+
+````
+set in main.cfm
+set in main.cfm
+updated in myInclude.cfm
+````
+
+So throughout execution there, `myVar` is the same variable in both files. This is important to note because in all the other ways of abstracting code, the abstracted code runs in its own memory space (which is a good thing).
+
+`include` is the most simple way of abstracting code from one file into another, but it's probably the least good way of doing so. On the whole one would seldom use `include` when writing modern code.
+
+### Modules ###
+
+Modules work similarly to includes, except for two main factors:
+
+* modules use their own memory space, so their code doesn't interfere with the calling code;
+* modules can be used as custom tags ([SEE APPROPRIATE CHAPTER]), indeed this is their primary use.
+
+There's a chapter dedicated to custom tags so I will not venture further down that route just yet. The syntax for calling in a module is confusingly different from using `include`:
+
+````cfc
+cfmodule(template="myModule.cfm");
+````
+
+Because myModule.cfm is run in its own memory space, it cannot simply refer to variables in the mainline code, as they are inaccessible. So to access them, they need to be passed into the module as an attribute/value pair:
+
+````cfc
+myVar = "set in main.cfm<br>";
+cfmodule(template="myModule.cfm", message=myVar);
+````
+
+I'll extend that example and show how the module runs in a different memory context:
+
+main.cfm
+````cfc
+myVar = "set in main.cfm<br>";
+cfmodule(template="myModule.cfm", message=myVar);
+
+writeOutput("Value of myVar in main.cfm after myModule.cfm has run: " & myVar);
+
+writeOutput("Value of updatedMessage in main.cfm after myModule.cfm has run: " & updatedMessage);
+````
+
+myModule.cfm
+````cfc
+myVarExists = isDefined("myVar");
+writeOutput("Does myVar exist in myModule.cfm? [#myVarExists#]<br>");
+
+writeOutput("Value of attributes.message in myModule.cfm: " & attributes.message);
+
+attributes.message = "updated in myModule.cfm<br>";	
+writeOutput("Updated value of attributes.message in myModule.cfm: " & attributes.message);
+
+caller.updatedMessage = attributes.message;
+````
+
+This outputs:
+
+````
+Does myVar exist in myModule.cfm? [false]
+Value of attributes.message in myModule.cfm: set in main.cfm
+Updated value of attributes.message in myModule.cfm: updated in myModule.cfm
+Value of myVar in main.cfm after myModule.cfm has run: set in main.cfm
+Value of updatedMessage in main.cfm after myModule.cfm has run: updated in myModule.cfm
+````
+
+Notice these things:
+
+* `myVar` only exists in main.cfm; it does *not* exist in myModule.cfm
+* one passes its value into the module using an attribute, then in myModule.cfm there is a variable `attributes.message` available.
+* changing the value in the module does not impact the original variable in the calling code.
+* one can set variables in the calling context by using the `caller` "scope".
+
+I'll discuss the scoping of variables later; it's sufficient to see it working at the moment.
+
+Again, like using `include`, using `cfModule()` isn't really a great way of abstracting code. Indeed you're even less likely to use it as an approach than `include`. As I touched on above, modules are generally used for custom tags, not being called directly. BUt it's a handy example to compare the way the different memory contexts work (comparing an included file and a... "moduled"... file).
+
+### Functions ###
+
+We're finally in the territory of code abstraction techniques you *do* want to use. A function is the work-horse way of abstracting code for later / repetitive use. Generally one would organise one's functions into classes, but I'll get to that.
+
+Functions abstract code into its own reusable context, giving it a name, a mechanism to pass values into the code for use, and return a value when done:
+
+````cfc
+function sumTwoNumbers(n1, n2){
+	var sum = n1 + n2;
+	return sum;
+}
+
+x1 = 2;
+y1 = 3;
+
+writeOutput("#x1# + #y1# = #sumTwoNumbers(x1,y1)#<br>");
+
+x2 = 5;
+y2 = 7;
+
+writeOutput("#x2# + #y2# = #sumTwoNumbers(x2,y2)#<br>");
+````
+
+This outputs:
+````
+2 + 3 = 5
+5 + 7 = 12
+````
+
+The function `sumTwoNumbers()` defines that it takes two arguments: `n1` and `n2` (you'd normally give more descriptive names than this!). And the body of the function simply sums those two values, and then returns them.
+
+In the calling code we've got two pairs of completely different variables (`x1`, `y1` and `x2`, `y2`), which we pass - in turn - into `sumTwoNumbers()` as arguments. At no point does the code within `sumTwoNumbers()` refer to any variables in the calling code; and at no point does the calling code reference any variables or code in the function.
+
+This is thing about functions: they ought to be completely encapsulated: they should only work with values being passed into them as arguments, do some processing (with no side effects anywhere else), and return the result of the processing. The calling code leverages this by calling the function with whichever values are necessary, and then using its result. The calling code doesn't need to know *how* the function does its work, it just needs to know how to call the function and to expect its result.
+
+In this example, we could change the implementation of the function:
+
+````cfc
+function sumTwoNumbers(n1, n2){
+	var sum = 0;
+	sum += n1;
+	sum += n2;
+	return sum;
+}
+````
+
+And the calling code stays the same.
+
+Note that one *generally* wouldn't have the function defined in the main code like this, but it's just easier for the example code. And it's important to see how a function operates in its own memory context.
+
+Do note though, how when I am declaring a new variable inside the function, I use the `var` keyword:
+
+````cfc
+var sum = 0;
+````
+
+Using the `var` keyword, the `sum` variable is made local to the function's memory context. Had I *not* used the `var` keyword, then `sum` would have been created in the calling code's memory context. This demonstrates that the code within a function *can* access variables in the maintain code, and set them too. However this should be avoided. The only values a function should use are its argument values, and other values it derives from those. It should *not* directly reference variables from its calling context. The main reason for this is that it means the function actually relies on its calling code to be able to work, which makes it less portable.
+
+### Classes ###
+
+The way one *should* organise one's functions is to put them into a class (for some reason CFML refers to them as "components" in their definition: but just think "class"). Like most OO languages, this is the primary way CFML organises its code, and where almost all of your code will go.
+
+There's an entire section on CFML's OO implementation later on, I'm just doing to discuss the code-abstraction side of things here.
+
+CFML has two different types of code file: a general script file, which just contains procedural code, with the file extension .cfm. These are the files one would use for views or for the entry point into your application. Or if indeed you just needed to write a quick test script like the code I've been listing as we go in this document. If one browses to a web-accessible .cfm file, it will execute, running the code from top to bottom.
+
+The other file type is a CFC (.cfc extension), or "ColdFusion Component". These are not directly executable like .cfm files, they are used to define classes. A function encapsulates logic into a transportable / re-usable unit; a class encapsulates the description of a type of data (made up of properties), plus all its behaviour (methods) into one unit. The basic programming language has a sense of a string, or an array or what-have-you, but it's up to the application to define what - for example - it means to be a Person (or a Vehicle, or a Queue, etc). A Person will have properties (data values) like `firstName` and `lastName`, and it might have a method (behaviour) `getFullName()` which returns what it suggests in its name, based on the values for `firstName` and `lastName`:
+
+````cfc
+component accessors=true {
+	property firstName;
+	property lastName;
+
+	function init(firstName, lastName){
+		setFirstName(firstName);
+		setLastName(lastName);
+	}
+
+	function getFullName(){
+		return firstName & " " & lastName;
+	}
+}
+````
+
+And we can then use that Person class to create a Person object in our main code:
+
+````cfc
+friend = new Person("Isla", "Jeffries");
+
+fullNameOfFriend = friend.getFullName();
+writeOutput(fullNameOfFriend);
+````
+
+This outputs:
+
+````
+Ilsa Jeffries
+````
+
+Here the main code doesn't need to know anything about what it is to be a Person, all it needs to know is the method signatures for init() and getFullName(). All the rest is encapsulated away inside Person.cfc
+
+## Summary ##
+Left to its own devices, code will just execute top to bottom. Obviously that's often not going to be much use: we need to make decisions; repeat tasks; and organise our code into easy to follow, clear units of work; and re-usable elements where possible. CFML's got a lot of options to implement good clean code.
+
