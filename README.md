@@ -15,16 +15,16 @@ Cheers for any help!
 
 ## Current sit. rep. ##
 
-- [Housekeeping](Chapter-0.md) - FIRST DRAFT
-- [Variables and expressions](Chapter-1.md) - FIRST DRAFT
-- [Control structures](Chapter-2.md) - FIRST DRAFT
-- [Built-in types](Chapter-3.md) - FIRST DRAFT
-- [Components](Chapter-4.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
-- [Components cont'ed](Chapter-5.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
-- [Error handling](Chapter-6.md) - PLACEHOLDER
-- [TDD](Chapter-7.md) - PLACEHOLDER
-- [Clean code](Chapter-8.md) - PLACEHOLDER
-- [Request/response process & scopes](Chapter-9.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
+- [Housekeeping](Chapter-00.md) - FIRST DRAFT
+- [Variables and expressions](Chapter-01.md) - FIRST DRAFT
+- [Control structures](Chapter-02.md) - FIRST DRAFT
+- [Built-in types](Chapter-03.md) - FIRST DRAFT
+- [Components](Chapter-04.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
+- [Components cont'ed](Chapter-05.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
+- [Error handling](Chapter-06.md) - PLACEHOLDER
+- [TDD](Chapter-07.md) - PLACEHOLDER
+- [Clean code](Chapter-08.md) - PLACEHOLDER
+- [Request/response process & scopes](Chapter-09.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
 - [Application framework](Chapter-10.md) - PLACEHOLDER
 - [ORM](Chapter-11.md) - PLACEHOLDER
 - [MVC basics](Chapter-12.md) - PLACEHOLDER
