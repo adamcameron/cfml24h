@@ -160,7 +160,7 @@ A `case` is not actually the test condition, that's all handled by the `switch` 
 
 Sometimes having this "fall through" functionality is desirable, but on the whole it's something to look out for when processing is not behaving how you'd intended it to be.
 
-A side effect of this is that one can have one block of code executed for multiple `case`s:
+A side effect of this is that one can have one block of code executed for multiple `case` labels:
 
 ````cfc
 switch (colour) {
@@ -335,7 +335,7 @@ This general `for` statement takes three separate (and optional) statements in i
 for (initial; beforeEach; afterEach) statement(s)
 ````
 
-* `initial`: this statement is once and only once before processing any of the rest of the code in the loop. This can be any single assignment statement.
+* `initial`: this statement is executed once and only once before processing any of the rest of the code in the loop. This can be any single assignment statement.
 * `beforeEach`: this is a boolean expression which is checked before each iteration (including before the first iteration) of the loop. If the expression is `true`, then the loop body is executed; if it is `false` (or `null`), processing continues *after* the `for` statement's code block. Note that if the expression is `false` from the outset, then the loop body is *not* executed even a first time. So it's possible for a `for` loop's code block to not be executed.
 * `afterEach`: at the end of each iteration of the loop, this expression is evaluated. It's only evaluated at all if the `beforeEach` expression was `true`.
 * `statement(s)`: the code that is repeated by the loop: either a single statement or a block of statements.
@@ -401,7 +401,7 @@ for (key in person) {
 }
 ````
 
-The thing to remember here is that structs do not have a sense of ordering (more about this in Chatpter 3), so there is no guarantee which order the keys will come out in. In the example above, the keys come out in the reverse order that they were set.
+The thing to remember here is that structs do not have a sense of ordering (more about this in Chapter 3), so there is no guarantee which order the keys will come out in. In the example above, the keys come out in the reverse order that they were set.
 
 ##### Record set #####
 
@@ -487,9 +487,9 @@ On the other hand, `continue` simply exits from the current *iteration* of the l
 
 ````cfc
 for (i=1; i <= 5; i++){
-	writeOutput("Before break: #i#<br>");
+	writeOutput("Before continue: #i#<br>");
 	continue;
-	writeOutput("After break: #i#<br>");
+	writeOutput("After continue: #i#<br>");
 }
 writeOutput("After loop<br>");
 ````
@@ -497,11 +497,11 @@ writeOutput("After loop<br>");
 The output for this one is:
 
 ````
-Before break: 1
-Before break: 2
-Before break: 3
-Before break: 4
-Before break: 5
+Before continue: 1
+Before continue: 2
+Before continue: 3
+Before continue: 4
+Before continue: 5
 After loop
 ````
 
@@ -525,7 +525,7 @@ In this example the output is:
 246810
 ````
 
-Right. Back to the actual looping constructs...
+Right. That's it: that's all there is to say on `break` and `continue`. Back to the actual looping constructs...
 
 
 ### while ###
@@ -580,7 +580,7 @@ All those previous looping constructs are very general purpose, and don't really
 
 * transforming the values in the collection somehow: remapping it.
 * Filtering elements out of the collection based on a rule.
-* Deriving a single value or different kind of value from the elemens of the collection.
+* Deriving a single value or different kind of value from the elements of the collection.
 * Checking if some or all of the elements of a collection meet some criteria.
 
 When you think about it, you're seldom going to be looping over a collection for the heck of it: you're doing some data processing whilst you do it. CFML has an object-oriented and functional-programming approach to these operations. It has a series of collection-oriented methods which apply a callback (and optionally other parameters) to each element of the collection in turn, performing some operation to arrive at some end.
@@ -591,7 +591,7 @@ For these examples I'll just show the array-specific methods. The ones for other
 
 #### map() ####
 
-The `map()` method creates a new collection, with each element somehow transformed, or with the original element used as some basis for an equivalent element in the new collection.
+The `map()` method creates a new collection based on the collection having `map()` called upon it, with each element somehow transformed, or with the original element used as some basis for an equivalent element in the new collection.
 
 Here we remap an array of lowercase letters, simply creating new array which has the same letters uppercased:
 
@@ -652,7 +652,7 @@ function(element)
 
 #### reduce() ####
 
-`reduce()` is slightly conceptually trickier than `map()` and `filter()`, which are both fairly obvious in their intent. The object of the `reduce()` method is to take a whole collection and derive one single value from it. This is achieved by applying a callback to each element of the collection - nothing different about that - but this time the callback returns the result of the previous callback call, as well as the next element in the collection. The `reduce()` method also takes an additional argument that is the initial value to pass to the first element's callback.
+`reduce()` is slightly conceptually trickier than `map()` and `filter()`, which are both fairly obvious in their intent. The purpose of the `reduce()` method is to take a whole collection and derive one single value from it. This is achieved by applying a callback to each element of the collection - nothing different about that - but this time the callback receives the result of the previous callback call, as well as the next element in the collection. The `reduce()` method also takes an additional argument that is the initial value to pass to the first element's callback.
 
 ````cfc
 letters = ["a", "b", "c", "d", "e", "f"];
@@ -741,7 +741,7 @@ function(element, index, array)
 
 This method is only supported on Lucee.
 
-`all()` is kind of the inverse of `some()`. It continues iterating whilst the callback returns `true`, and exits as soon as the callback returns `false`. If it gets to the end of the collection before returning `false`, `all()` returns `true`.
+`every()` is kind of the inverse of `some()`. It continues iterating whilst the callback returns `true`, and exits as soon as the callback returns `false`. If it gets to the end of the collection before returning `false`, `every()` returns `true`.
 
 ````cfc
 numbers = [1,2,3,4,5];
@@ -832,8 +832,8 @@ include "footer.cfm";
 
 And simply break down the code thus:
 
+header.cfm
 ````cfc
-// header.cfm
 // header
 // code
 // takes
@@ -842,8 +842,8 @@ And simply break down the code thus:
 // of code
 ````
 
+body.cfm
 ````cfc
-// body.cfm
 // main body
 // is
 // another
@@ -852,8 +852,8 @@ And simply break down the code thus:
 // of code
 ````
 
+footer.cfm
 ````cfc
-// footer.cfm
 // and the footer
 // is 10 lines
 // ...
@@ -862,7 +862,7 @@ And simply break down the code thus:
 
 So the homepage.cfm code now just describes what comprises the home page, but the implementation detail has been factored out into more  wieldy chunks. If one has to do some maintenance or enhancements to the header, one only needs to work on a smaller file with just the 20 lines of header code in it. Similarly if maintaining the main body, one focuses on just the code in body.cfm.
 
-This also sets one up nicely for creating other pages which need the same header and footer: they can simmply include those files too.
+This also sets one up nicely for creating other pages which need the same header and footer: they can simmply include those header.cfm and footer.cfm files too.
 
 When using `include` it is almost as if the CFML engine inserts the code from the included file into the file including it, and then executes the code as one piece. This is similar to how C implements the `#include` directive. This is not quite what happens. The CFML compiler compiles the included file separately and *before* it's included into the file including it. Then the code is executed. This means the CFML code in an included file needs to be syntactically complete so it can be compiled. Here's an example to demonstrate:
 
@@ -1018,7 +1018,7 @@ Notice these things:
 
 I'll discuss the scoping of variables later; it's sufficient to see it working at the moment.
 
-Again, like using `include`, using `cfModule()` isn't really a great way of abstracting code. Indeed you're even less likely to use it as an approach than `include`. As I touched on above, modules are generally used for custom tags, not being called directly. BUt it's a handy example to compare the way the different memory contexts work (comparing an included file and a... "moduled"... file).
+Again, like using `include`, using `cfModule()` isn't really a great way of abstracting code. Indeed you're even less likely to use it as an approach than `include`. As I touched on above, modules are generally used for custom tags, not being called directly. But it's a handy example to compare the way the different memory contexts work (comparing an included file and a... "moduled"... file).
 
 ### Functions ###
 
@@ -1119,7 +1119,7 @@ This outputs:
 Ilsa Jeffries
 ````
 
-Here the main code doesn't need to know anything about what it is to be a Person, all it needs to know is the method signatures for init() and getFullName(). All the rest is encapsulated away inside Person.cfc
+Here the main code doesn't need to know anything about what it is to be a Person, all it needs to know is the method signatures for `init()` and `getFullName()`. All the rest is encapsulated away inside Person.cfc
 
 ## Summary ##
 Left to its own devices, code will just execute top to bottom. Obviously that's often not going to be much use: we need to make decisions; repeat tasks; and organise our code into easy to follow, clear units of work; and re-usable elements where possible. CFML's got a lot of options to implement good clean code.

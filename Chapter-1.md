@@ -90,6 +90,10 @@ if (a){
 
 Note that the Lucee CFML implementation make semi-colons optional in almost all situations, but not in some ambiguous situations. My recommendation is to always use them, as the rules as to when they are (/not) needed are poorly defined, so it's a matter of trial and error in one's code.
 
+#### Statement blocks and variable scope ####
+
+In some languages, a variable declared within a statement's block is localised to that block. This is not the case in CFML: CFML has no block-level variable scope.
+
 ### Expressions ###
 
 An expression is a construct that returns a value. Ideally (but only ideally) it has no side effects beyond that.
