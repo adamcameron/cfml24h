@@ -15,31 +15,31 @@ Cheers for any help!
 
 ## Current sit. rep. ##
 
-- [Housekeeping](Chapter-0.md) - FIRST DRAFT
-- [Variables and expressions](Chapter-1.md) - FIRST DRAFT
-- [Control structures](Chapter-2.md) - FIRST DRAFT
-- [Built-in types](Chapter-3.md) - FIRST DRAFT
-- [Components](Chapter-4.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
-- [Components cont'ed](Chapter-5.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
-- [Error handling](Chapter-6.md) - PLACEHOLDER
-- [TDD](Chapter-7.md) - PLACEHOLDER
-- [Clean code](Chapter-8.md) - PLACEHOLDER
-- [Request/response process & scopes](Chapter-9.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
-- [Application framework](Chapter-10.md) - PLACEHOLDER
-- [ORM](Chapter-11.md) - PLACEHOLDER
-- [MVC basics](Chapter-12.md) - PLACEHOLDER
-- [Tags](Chapter-13.md) - limited to which should be used in views: output, loop, if, etc. And # usage. - PLACEHOLDER
-- [Custom Tags](Chapter-14.md) - PLACEHOLDER
-- [Advanced OO](Chapter-15.md) - possibly can be covered within earlier chapters. I'm thinking inheritance, interfaces, polymorphism etc here. I think the OO chapter breakdown needs some thought - PLACEHOLDER
-- [Advanced DB](Chapter-16.md) - this will be ```<cfquery>``` (or ```queryExecute()```!) and calling stored procs. Might drop this back - PLACEHOLDER
-- [Advanced ORM](Chapter-17.md) - HQL. Poss roll this into the "Advanced DB" one - PLACEHOLDER
-- [File system / HTTP / FTP](Chapter-18.md) - PLACEHOLDER
-- [REST](Chapter-19.md) - PLACEHOLDER
-- [Function Expressions (and iteration methods)](Chapter-20.md) - PLACEHOLDER
-- [Threads and locking](Chapter-21.md) - PLACEHOLDER
-- [Java interaction](Chapter-22.md) - PLACEHOLDER
-- [TBC](Chapter-23.md) - PLACEHOLDER
-- [TBC](Chapter-24.md) - PLACEHOLDER
+- [Housekeeping](chapters/00-housekeeping.md) - FIRST DRAFT
+- [Variables and expressions](chapters/01-commands.md) - FIRST DRAFT
+- [Control structures](chapters/02-flow_control.md) - FIRST DRAFT
+- [Built-in types](chapters/03-types.md) - FIRST DRAFT
+- [Components](chapters/04-components.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
+- [Components cont'ed](chapters/05-components_conted.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
+- [Error handling](chapters/06-error_handling.md) - PLACEHOLDER
+- [TDD](chapters/07-tdd.md) - PLACEHOLDER
+- [Clean code](chapters/08-clean_code.md) - PLACEHOLDER
+- [Request/response process & scopes](chapters/09-request_response.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
+- [Application framework](chapters/10-application_framework.md) - PLACEHOLDER
+- [ORM](chapters/11-orm.md) - PLACEHOLDER
+- [MVC basics](chapters/12-mvc.md) - PLACEHOLDER
+- [Tags](chapters/13-tags.md) - limited to which should be used in views: output, loop, if, etc. And # usage. - PLACEHOLDER
+- [Custom Tags](chapters/14-custom_tags.md) - PLACEHOLDER
+- [Advanced OO](chapters/15-advanced_oo.md) - possibly can be covered within earlier chapters. I'm thinking inheritance, interfaces, polymorphism etc here. I think the OO chapter breakdown needs some thought - PLACEHOLDER
+- [Advanced DB](chapters/16-advanced_db.md) - this will be ```<cfquery>``` (or ```queryExecute()```!) and calling stored procs. Might drop this back - PLACEHOLDER
+- [Advanced ORM](chapters/17-advanced_orm.md) - HQL. Poss roll this into the "Advanced DB" one - PLACEHOLDER
+- [File system / HTTP / FTP](chapters/18-file_system.md) - PLACEHOLDER
+- [REST](chapters/19-rest.md) - PLACEHOLDER
+- [Function Expressions (and iteration methods)](chapters/20-function_expressions.md) - PLACEHOLDER
+- [Threads and locking](chapters/21-threading_locking.md) - PLACEHOLDER
+- [Java interaction](chapters/22-java.md) - PLACEHOLDER
+- [TBC](chapters/23-tbc.md) - PLACEHOLDER
+- [TBC](chapters/24-tbc.md) - PLACEHOLDER
 
 Currently MIA
 - defensive coding
