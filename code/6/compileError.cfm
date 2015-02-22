@@ -1,0 +1,3 @@
+<cfscript>
+	result = someFunction(;
+</cfscript>
