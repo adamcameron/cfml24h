@@ -21,7 +21,7 @@ Cheers for any help!
 - [Built-in types](chapters/03-types.md) - FIRST DRAFT
 - [Components](chapters/04-components.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
 - [Components cont'ed](chapters/05-components_conted.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
-- [Error handling](chapters/06-error_handling.md) - PARTIAL DRAFT
+- [Error handling](chapters/06-error_handling.md) - FIRST DRAFT
 - [TDD](chapters/07-tdd.md) - PLACEHOLDER
 - [Clean code](chapters/08-clean_code.md) - PLACEHOLDER
 - [Request/response process & scopes](chapters/09-request_response.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
