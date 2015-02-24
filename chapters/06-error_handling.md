@@ -66,32 +66,8 @@ result = someFunction(;
 
 Note that that code is malformed: it doesn't have its closing parenthesis. Syntax errors like this prevent the file from compiling, and yield a compile error:
 
-<table border="1">
-<tbody>
-<tr><td colspan="2">Lucee 4.5.1.003 Error (template)</td></tr>
-<tr><td>Message</td><td>Syntax Error, Invalid Construct</td></tr>
-<tr>
-<td>Stacktrace</td>
-<td>
-The Error Occurred in<br>
-C:\code\6\compileError.cfm: line 2<br> 
-<pre><code>1: &lt;cfscript&gt;
-2: result = someFunction(;
-3: &lt;/cfscript&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td>Java Stacktrace</td>
-<td>
-Syntax Error, Invalid Construct<br>
-<pre>    at lucee.transformer.cfml.expression.AbstrCFMLExprTransformer.checker(Unknown Source):-1 <br>
-    etc
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+
+<img src="../images/6/compileError.png">
 
 
 This is not *particularly* clear that there's been a compile error, but if you see "syntax error", then it's a compile error.
@@ -141,32 +117,7 @@ But because this is a runtime error, we're given an exception to deal with, and 
 
 Oh, let's look at how that previous code runs *without* the `try` / `catch`:
 
-<table border="1">
-<tbody>
-<tr><td colspan="2">Lucee 4.5.1.003 Error (java.lang.ArithmeticException)</td></tr>
-<tr><td>Message</td><td>Division by zero is not possible</td></tr>
-<tr>
-<td>Stacktrace</td>
-<td>
-The Error Occurred in<br>
-C:\code\6\divisionByZero.cfm: line 2<br> 
-<pre><code>1: &lt;cfscript&gt;
-2: result = 1 / 0;
-3: &lt;/cfscript&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td>Java Stacktrace</td>
-<td>
-Division by zero is not possible<br>
-<pre>    at lucee.runtime.op.Operator.divRef(Unknown Source):-1<br>
-    etc
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+<img src="../images/6/divisionByZero.png">
 
 So using `try`/`catch` the error still occurs, but instead of exiting, we are able to catch the exception, then do something. In my example I'm just outputing some info about the exception, but one can do whatever one wants there to deal with the situation as appropriate.
 
@@ -223,35 +174,7 @@ try {
 
 Now we get:
 
-<code>
-type: java.lang.ArithmeticException; message: Division by zero is not possible
-</code>
-<table border="1">
-<tbody>
-<tr><td colspan="2">Lucee 4.5.1.003 Error (java.lang.ArithmeticException)</td></tr>
-<tr><td>Message</td><td>Division by zero is not possible</td></tr>
-<tr>
-<td>Stacktrace</td>
-<td>
-The Error Occurred in<br>
-C:\code\6\divisionByZero.cfm: line 2<br> 
-<pre><code>1: &lt;cfscript&gt;
-2: result = 1 / 0;
-3: &lt;/cfscript&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td>Java Stacktrace</td>
-<td>
-Division by zero is not possible<br>
-<pre>    at lucee.runtime.op.Operator.divRef(Unknown Source):-1<br>
-    etc
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+<img src="../images/6/rethrow.png">
 
 So we get both the error handling code running, but then we just get the original error again.
 
@@ -268,38 +191,8 @@ try {
 }
 ````
 
-<code>
-type: java.lang.ArithmeticException; message: Division by zero is not possible
-</code>
-<table border="1">
-<tbody>
-<tr><td colspan="2">Lucee 4.5.1.003 Error (BadExpressionException)</td></tr>
-<tr><td>Message</td><td>The provided expression was invalid</td></tr>
-<tr><td>Description</td><td>Original exception: java.lang.ArithmeticException</td></tr>
-<tr>
-<td>Stacktrace</td>
-<td>
-The Error Occurred in<br>
-C:\code\6\divisionByZero.cfm: line 6<br> 
-<pre><code>4: } catch (any e){
-5: writeOutput("type: #e.type#; message: #e.message#");
-6: throw(type="BadExpressionException", message="The provided expression was invalid", detail="Original exception: #e.type#");
-7: }
-8: </cfscript>
-</code></pre>
-</td>
-</tr>
-<tr>
-<td>Java Stacktrace</td>
-<td>
-The provided expression was invalid<br>
-<pre>    at shared.cfml24h.code._6.divisionbyzero_cfm$cf.call(C:\code\6\divisionByZero.cfm:6):6<br>
-    etc
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+<img src="../images/6/throw.png">
+
 
 ### Continuing ###
 
