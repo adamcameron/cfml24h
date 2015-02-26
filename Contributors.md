@@ -5,3 +5,4 @@ Thanks to the following people:
 * Ray Camden
 * Matt Busche
 * Ryan Guill
+* Andy Myers
