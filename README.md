@@ -19,7 +19,7 @@ Cheers for any help!
 - [Variables and expressions](chapters/01-commands.md) - FIRST DRAFT
 - [Control structures](chapters/02-flow_control.md) - FIRST DRAFT
 - [Built-in types](chapters/03-types.md) - FIRST DRAFT
-- [Components](chapters/04-components.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PLACEHOLDER
+- [Components](chapters/04-components.md) - incl. remote usage (FYI only, as opposed to a recommended approach) - PARTIAL DRAFT
 - [Components cont'ed](chapters/05-components_conted.md) (properties, accessors) - PLACEHOLDER (might not be necessary)
 - [Error handling](chapters/06-error_handling.md) - FIRST DRAFT
 - [TDD](chapters/07-tdd.md) - PLACEHOLDER

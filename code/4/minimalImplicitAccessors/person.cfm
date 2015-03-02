@@ -2,7 +2,8 @@
 	person = new Person("Abigail", "Bowen");
 
 	writeDump({
-		variables = person.getVariables(),
-		this = person.getThis()
+		firstName = person.firstName,
+		lastName = person.lastName
 	});
+
 </cfscript>

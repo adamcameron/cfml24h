@@ -1,3 +1,3 @@
 component {
-	//this.invokeImplicitAccessor = true;
+	this.invokeImplicitAccessor = true;
 }

@@ -1,4 +1,5 @@
-component accessors=true {
+// Person.cfc
+component {
 
 	property firstName;
 	property lastName;
@@ -6,14 +7,6 @@ component accessors=true {
 	function init(firstName, lastName){
 		variables.firstName = arguments.firstName;
 		variables.lastName = arguments.lastName;
-	}
-
-	function getVariables(){
-		return variables;
-	}
-
-	function getThis(){
-		return this;
 	}
 
 }
