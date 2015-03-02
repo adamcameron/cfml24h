@@ -18,8 +18,11 @@ I suppose statements apply an expression to a command? I'll have to think about 
 
 One important thing to note is that all CFML constructs are case insensitive. This includes statements, function/method names, variable names. Basically everything.
 
+
 ### Commands ###
+
 These are the baseline language constructs like "return", "if", "case" etc. They define program flow, and represent low-level language operations which effect statements, and use expressions.
+
 
 ### Statements ###
 
@@ -31,6 +34,7 @@ myVar = someValue;
 
 Statements are represented by one of three syntactical constructs:
 
+
 #### Execution ####
 
 ```cfc
@@ -38,6 +42,7 @@ return a;
 ```
 
 This gives a value to a command, and the command does something with it. In this case, the return command takes the value and transfers it back to the calling code.
+
 
 #### Assignment ####
 
@@ -52,6 +57,7 @@ someObject.aMethod()
 ```
 
 This acts on the object, but doesn't return a value.
+
 
 #### Flow control statement ####
 
@@ -90,9 +96,11 @@ if (a){
 
 Note that the Lucee CFML implementation make semi-colons optional in almost all situations, but not in some ambiguous situations. My recommendation is to always use them, as the rules as to when they are (/not) needed are poorly defined, so it's a matter of trial and error in one's code.
 
+
 #### Statement blocks and variable scope ####
 
 In some languages, a variable declared within a statement's block is localised to that block. This is not the case in CFML: CFML has no block-level variable scope.
+
 
 ### Expressions ###
 
@@ -121,6 +129,7 @@ Here "someValue" is an expression. It simply needs to return a value that is boo
 
 
 ### Functions? ###
+
 How do functions - either CFML's own ones, or your own - fit into this? The definition of the functions comprise commands (eg: "`function`") and statements ("```function f(x){/*statements*/}```"). And when you call a function (```f(1)```) it's an expression. You might have a statement that calls a function and assigns the result to a variable(```y = f(1);```).
 
 To muddy the waters, functions can also be declared via function expressions!
@@ -139,10 +148,14 @@ f = function (x){
 
 There's reasons to use either of these appraoches, but that's for a later chapter.
 
+
 ### Summary ###
+
 I think all code is pretty much made of statements which apply expressions to commands. With varying degrees of optionality along the way. It might seem like semantics, but being able to identify the individual parts of your code will make it easier to understand the bigger picture of what's going on. To be frank... before writing this stuff down, I didn't have a fully-formed understanding of how it all comes together.
 
+
 ### Warning ###
+
 Both Lucee and ColdFusion's dialects of CFML have constructs that defy reasoning, and might look like expressions but are actually commands, or statements. I'm going to avoid these non-standard constructs if possible, as they are generally avoidable when coding. I might need to add a "caveats" section to this book at some stage (my writing process is very stream of consciousness, and this is only chapter one, so I haven't yet analysed how much discussion this topic needs!)
 
 
@@ -156,7 +169,9 @@ someVariableName = someValue
 
 That said, as with all language-specific implementations, there are some rules and practices. Variable names in CFML can be anything. <code>!&#8364;#&#x2606;</code> is a valid variable name. However you're making your life more difficult than it needs to be by not limiting yourself to a subset of all possible typographical glyphs. There are three (hmmm... two and a half, perhaps) syntax variations. And only one of them will let you call a variable anything.
 
+
 ### Basic ###
+
 The basic syntax is as demonstrated above:
 
 ```cfc
@@ -198,7 +213,9 @@ One needs to give the variable an initial value, eg:
 myVar = "";
 ```
 
+
 ### Dot notation ###
+
 When referencing variables in a specific scope (see relevant chapter), or properties of a specific object, the most syntactically-clear syntax is dot notation:
 
 ```cfc
@@ -208,7 +225,9 @@ person.firstname
 
 One uses the dot-operator to separate a variable or property (or method) from its scope or object. And if one is using dot notation, the same basic variable rules as stated above apply.
 
+
 ### Associative array notation ###
+
 This is also known as "bracket notation". Its a more "forgiving" notation than dot notation, as the key provided in the brackets can be any string:
 
 ```cfc
@@ -217,7 +236,9 @@ variables["!€#☆"] = "completely valid variable name";
 
 This might seem fairly contrived - my example certainly is - but it opens up two possibilities. Firstly, data doesn't always originate from within the CFML system itself. Database columns can have odd names (with spaces, pound signs, etc), and different languages one might be interconnecting with with CFML will have different naming rules too. This is CFML's way of dealing with that.
 
+
 #### Dynamic variable names ####
+
 Associative array notation also allows for completely dynamic variable names. The value in the square brackets is just a string, so it can also be a variable containing a string. Or indeed any expression which returns a string. For example:
 
 ```cfc
@@ -249,7 +270,9 @@ These examples are all very contrived, but show the general technique. The take-
 
 Another important benefit of associative array notation is that the case of the variable name is preserved. CFML will still treat it case-insensitively, but when data-interchanging between other systems - via say JSON to JavaScript code - it becomes important for variable names to be case-sensitive.
 
+
 ### Coding style ###
+
 In general, use basic notation or dot notation, and - accordingly - simple variable names. In your own CFML code, stick to the rules. Reserve associative array notation for these situation:
 
 * you are interchanging data with other systems with different variable-naming rules,
@@ -258,12 +281,16 @@ In general, use basic notation or dot notation, and - accordingly - simple varia
 
 Sticking to these rules make your code more clear. Use the most restrictive syntax where possible (basic notation), only using more complex notation - dot notation or associative array notation - when necessary.
 
+
 ## Operators ##
+
 I discussed above how one expression can be built from other expressions. The missing piece of the puzzle is how expressions are joined together. Operators.
 
 If you stop to think about it: operators exist to apply an operator to one or more expressions. Or when specifically considering operators, they apply an operation to one or more operands (the operands are expressions).
 
+
 ### Unary operators ###
+
 These are applied to a single operand.
 
 <table border="1">
@@ -302,8 +329,8 @@ z = x++; // z=2, x=3
 </table>
 
 
-
 ### Binary Operators ###
+
 These take an operand either side of the operator:
 
 ```cfc
@@ -320,6 +347,7 @@ true || false
 These are all well-documented, so what I'll advise here is a winnowing of the wheat from the chaff. For example: use the docs to be aware of the ```LESS THAN OR EQUAL TO``` operator (no joke!), but never use it.
 
 Use these ones:
+
 
 #### Arithmetic ####
 
@@ -343,6 +371,7 @@ Use these ones:
 	</tbody>
 </table>
 
+
 #### String ####
 
 <table border="1">
@@ -363,7 +392,6 @@ is equivalent to:<br>
 	</tr>
 	</tbody>
 </table>
-
 
 
 #### Boolean ####
@@ -480,6 +508,7 @@ if (!argsAreValid){<br>
 	</tbody>
 </table>
 
+
 #### Decision ####
 
 <table border="1">
@@ -506,6 +535,7 @@ if (!argsAreValid){<br>
 	<tr><td>DOES NOT CONTAIN</td><td></td><td>The opposite of the above</td></tr>
 	</tbody>
 </table>
+
 
 #### Conditional assignment ####
 

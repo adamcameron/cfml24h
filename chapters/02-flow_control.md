@@ -6,6 +6,7 @@ CFML has all the usual suspects when it comes to flow control structures. I'll s
 * looping - eg: for / while / do/while / collection iteration methods
 * abstracting - eg: include files, modules, functions, classes
 
+
 ## Branching ##
 
 ### if ###
@@ -95,6 +96,7 @@ if (booleanExpression) {
 	// etc
 }
 ````
+
 
 ### switch ###
 
@@ -210,6 +212,7 @@ switch (URL.colour) {
 
 Finally... in all my examples here I have specified a `default` case. This is optional, but I think generally there is grounds to have one. The `default` case is used if none of the previous cases were used.
 
+
 ### try/catch ###
 
 The try/catch statement is for dealing with exceptions (runtime errors). The syntax for `try` / `catch` (and `finally`) is the same as in other similar languages:
@@ -302,6 +305,7 @@ There is more to exception handling, but this chapter is only really about the f
 
 Looping is really a special kind of branching: just branching back to an earlier line of code, rather than a subsequent line of code. Because execution is branching back to an earlier line of code, the same condition can be checked multiple times, effecting a logical "loop".
 
+
 ### for ###
 
 There are a couple of different `for` loops: a generic indexed loop, and a for-in loop. The general approach is the same: there is a `for` statement which conditionally executes statement(s) based on criteria. If the statements following the `for` are enclosed in curly braces, all of them are executed each iteration; without braces, just the single following statement is repeated, eg:
@@ -318,6 +322,7 @@ for (criteria) {
     // so is this and any other statements in the block
 }
 ````
+
 
 #### General purpose `for` loop ####
 
@@ -363,9 +368,11 @@ for (line=f.readLine();!isNull(line); line=fileIsEof(f) ? null : f.readLine()){
 
 (This code only works on Lucee with full null support enabled, by the way: CFML by default does not support the `null` keyword).
 
+
 #### Collection `for` loop ####
 
 This is a procedural approach to iterating over a collection. The collection can be any of an array, a struct, a record set, or a delimited string. They're all handled pretty similarly, so I'll just breeze over the syntax and an example for each. Basically a loop is a loop, so there's not too much to say about each of these.
+
 
 ##### Array #####
 
@@ -383,6 +390,7 @@ for (letter in letters) {
 	writeOutput(letter); // abc
 }
 ````
+
 
 ##### Struct #####
 
@@ -402,6 +410,7 @@ for (key in person) {
 ````
 
 The thing to remember here is that structs do not have a sense of ordering (more about this in Chapter 3), so there is no guarantee which order the keys will come out in. In the example above, the keys come out in the reverse order that they were set.
+
 
 ##### Record set #####
 
@@ -436,6 +445,7 @@ This outputs:
 3 Greta Holliday
 ````
 
+
 ##### String #####
 
 This is currently only supported on ColdFusion. Syntax:
@@ -455,9 +465,12 @@ for (number in numbers){
 
 It's important to note that the only supported delimiter is a comma.
 
+
+
 ### break and continue ###
 
 As I've already used a `break` in one of my examples above, I should actually explain what it does, I guess.
+
 
 #### break ####
 
@@ -480,6 +493,7 @@ After loop
 ````
 
 So processing enters the loop as per usual, but when it encounters the `break`, the loop is exited completely. Sometimes one only needs to process a loop until some certain condition is met (say: finding a value in an array), at which point in time one doesn't need to check the rest of the array, so one can break out of the loop. There is generally better ways of achieving this end, but that's the most common use case.
+
 
 #### continue ####
 
@@ -589,6 +603,7 @@ There's an entire section on their methods later on, but as they are control sta
 
 For these examples I'll just show the array-specific methods. The ones for other collections are similar.
 
+
 #### map() ####
 
 The `map()` method creates a new collection based on the collection having `map()` called upon it, with each element somehow transformed, or with the original element used as some basis for an equivalent element in the new collection.
@@ -620,6 +635,7 @@ And the callback should return the value of the remapped element.
 
 When using `map()`, the returned collection will always have the same index/keys, but with different values for the elements at that index/key.
 
+
 #### filter() ####
 
 `filter()` does what it says on the tin: it applies a filter to the collection, filtering out elements based on the logic in the passed-in callback (which, again, is applied to each element of the collection in turn).
@@ -650,6 +666,7 @@ ColdFusion's one is simply implemented as:
 function(element)
 ````
 
+
 #### reduce() ####
 
 `reduce()` is slightly conceptually trickier than `map()` and `filter()`, which are both fairly obvious in their intent. The purpose of the `reduce()` method is to take a whole collection and derive one single value from it. This is achieved by applying a callback to each element of the collection - nothing different about that - but this time the callback receives the result of the previous callback call, as well as the next element in the collection. The `reduce()` method also takes an additional argument that is the initial value to pass to the first element's callback.
@@ -670,28 +687,36 @@ abcdef
 
 This stands for more explanation perhaps. Let's follow through each iteration:
 
+
 ##### First iteration #####
+
 `aggregatedLetters` = "" (it's initial value, as per the second argument of the `reduce()` call)
 
 `letter` = "a" (the first element of the array)
 
 So it returns `"" & "a"`, or `"a"`
 
+
 ##### Second iteration #####
+
 `aggregatedLetters` = "a" (the result of the previous callback call)
 
 `letter` = "b"
 
 So it returns `"a" & "b"`, or `"ab"`
 
+
 ##### Third iteration #####
+
 `aggregatedLetters` = "ab" (the result of the previous callback call)
 
 `letter` = "c"
 
 So it returns `"ab" & "c"`, or `"abc"`
 
+
 ##### Fourth iteration #####
+
 `aggregatedLetters` = "abc" (the result of the previous callback call)
 
 `letter` = "d"
@@ -708,6 +733,7 @@ The method signature for the callback is:
 ````cfc
 function(previous, current, index, array)
 ````
+
 
 #### some() ####
 
@@ -736,6 +762,7 @@ The method signature for the callback is the same as you'd expect:
 ````cfc
 function(element, index, array)
 ````
+
 
 #### every() ####
 
@@ -766,6 +793,7 @@ The method signature for the callback is the same as for `some()`
 function(element, index, array)
 ````
 
+
 ## Abstracting code ##
 
 The third aspect of flow control is the various techniques of refactoring pieces of code out of the mainline code execution. One does this for one of two reasons, generally:
@@ -780,6 +808,7 @@ Even if the code is distinctly one-use - which is often the case, and there's no
 Any given piece of code should do one thing. As part of doing that it might call in other code to achieve that one thing, but the detail of performing those substeps should be abstracted-out into a separate location.
 
 CFML offers a few different ways of factoring sections of logic out of the mainline code, for re-use and organisation.
+
 
 ### Include files ###
 
@@ -954,6 +983,7 @@ So throughout execution there, `myVar` is the same variable in both files. This 
 
 `include` is the most simple way of abstracting code from one file into another, but it's probably the least good way of doing so. On the whole one would seldom use `include` when writing modern code.
 
+
 ### Modules ###
 
 Modules work similarly to includes, except for two main factors:
@@ -1020,6 +1050,7 @@ I'll discuss the scoping of variables later; it's sufficient to see it working a
 
 Again, like using `include`, using `cfModule()` isn't really a great way of abstracting code. Indeed you're even less likely to use it as an approach than `include`. As I touched on above, modules are generally used for custom tags, not being called directly. But it's a handy example to compare the way the different memory contexts work (comparing an included file and a... "moduled"... file).
 
+
 ### Functions ###
 
 We're finally in the territory of code abstraction techniques you *do* want to use. A function is the work-horse way of abstracting code for later / repetitive use. Generally one would organise one's functions into classes, but I'll get to that.
@@ -1078,6 +1109,7 @@ var sum = 0;
 
 Using the `var` keyword, the `sum` variable is made local to the function's memory context. Had I *not* used the `var` keyword, then `sum` would have been created in the calling code's memory context. This demonstrates that the code within a function *can* access variables in the maintain code, and set them too. However this should be avoided. The only values a function should use are its argument values, and other values it derives from those. It should *not* directly reference variables from its calling context. The main reason for this is that it means the function actually relies on its calling code to be able to work, which makes it less portable.
 
+
 ### Classes ###
 
 The way one *should* organise one's functions is to put them into a class (for some reason CFML refers to them as "components" in their definition: but just think "class"). Like most OO languages, this is the primary way CFML organises its code, and where almost all of your code will go.
@@ -1121,6 +1153,7 @@ Ilsa Jeffries
 
 Here the main code doesn't need to know anything about what it is to be a Person, all it needs to know is the method signatures for `init()` and `getFullName()`. All the rest is encapsulated away inside Person.cfc
 
-## Summary ##
-Left to its own devices, code will just execute top to bottom. Obviously that's often not going to be much use: we need to make decisions; repeat tasks; and organise our code into easy to follow, clear units of work; and re-usable elements where possible. CFML's got a lot of options to implement good clean code.
 
+## Summary ##
+
+Left to its own devices, code will just execute top to bottom. Obviously that's often not going to be much use: we need to make decisions; repeat tasks; and organise our code into easy to follow, clear units of work; and re-usable elements where possible. CFML's got a lot of options to implement good clean code.

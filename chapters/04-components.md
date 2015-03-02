@@ -6,7 +6,7 @@ Object oriented (OO) principles are pretty much outwith the scope of this book -
 
 CFML provides a bunch of basic data types as discussed in [Built-in types](03-types.md): strings, dates, arrays, structs etc. All of these are implemented as objects which have properties (ie: values) and methods (ie: functions which perform actions). This is basic object orientation at work.
 
-I'll quickly run through some terms though
+I'll quickly run through some terms though.
 
 
 ### Class (/component) ###
@@ -118,7 +118,13 @@ Encapsulation extends beyond that. Often times a class will be implemented with 
 * Destructors
 * Final classes, methods or properties
 
-There is an endless number of OO terms out there which I have not mentioned here, one way or the other.
+### Summary of OO terms ###
+
+That was rather less brief than I initially meant it to be. And sorry for not having shown even a single line of code so far in this chapter!
+
+There is an endless number of OO terms out there which I have not mentioned here, one way or the other. But I've covered the ones that are important to CFML, and made it clear which common concepts CFML doesn't implement.
+
+CFML's OO implementation is reasonably fully-featured when considering the requirements and behaviour of dynamic languages, compared to the usually more rigid language rules of more staticly typed languages which might benefit from some constructs that CFML simply doesn't need.
 
 
 

@@ -2,6 +2,7 @@
 
 I touched on exception handling before, but only in the context of how exception handling impacts flow control, rather than really going through the concepts behind it.
 
+
 ## Errors happen ##
 
 Code will error. That's the first thing to accept... there's no such thing as bug free code (one can come up with trite examples to the contrary, but you know what I mean), and we just need to deal with bugs as they occur. But also sometimes is a fairly "logically sound" piece of code, things still go wrong, and whilst in some situations it's not reasonable to expect a problem so no reason to really try to code defensively around it, there are other situations in which it's more easy to predict that something will go wrong. These situations generally revolve around interactions with external systems rather than your own code. External systems are things like remote web services, third-party APIs, the local file system and... humans. These things all conspire to make our code break. Our code should deal with predictable systems by coding so that errors are not likely to occur - and errors that do occur are probably bugs - however when dealing with external systems one should only code an application to "work" for predictable inputs and outputs, and when unpredictable events happen - exception circumstances - the best way to handle it is to expect it to break, and pick up the pieces carefully once it's done so. This is exception handling.
@@ -50,9 +51,11 @@ try {
 
 I separated it out merely to get you to think about what's going on: we `try` some code; we `catch` any exception that tried code might throw.
 
+
 ## Digression: types of errors ##
 
 I've perhaps not been as careful as I should be with my terminology here, but this is reflective of common usage. I will - no doubt - use the notion of "error" and "exception" interchangeably. This is unhelpfully vague. Errors come in various flavours, and not all of them result in exceptions. In CFML there are really only two types of errors to worry about: compile-time errors, and run-time errors.
+
 
 ### Compilation errors ###
 
@@ -85,6 +88,7 @@ result = someFunction(;
 	// deal with that syntax error
 }
 ````
+
 
 ### Runtime errors ###
 
@@ -143,6 +147,7 @@ So it's important to note that when one handles an error, then processing *doesn
 * throw a *different* exception - this again will cause an error, but bubble up a different exception to code possibly handling it or listening for it.
 * simply abort processing.
 
+
 ### Aborting ###
 
 Here's an example:
@@ -158,6 +163,7 @@ try {
 ````
 
 This speculative example shows running some tidy-up code when the error occurs, then logging that it happened, but then simply aborting processing. `abort` simply says to the CFML engine "that's the end of that".
+
 
 ### Rethrow ###
 
@@ -177,6 +183,7 @@ Now we get:
 <img src="../images/6/rethrow.png">
 
 So we get both the error handling code running, but then we just get the original error again.
+
 
 ### Raising new exceptions with `throw` ###
 
@@ -230,6 +237,7 @@ Here we just use the `try` / `catch` to protect against optional code interferin
 
 Our actual code handles this lot slightly differently, but it's a reasonable example.
 
+
 ## Causing exceptions ##
 
 One might wonder if we've gone to all the effort of catching an exception, why then just throw it again, or throw a *different* exception. Fair question.
@@ -256,6 +264,7 @@ So our API handles each of the "expected" exceptions from the payment providers 
 * your payment didn't go through, please try again
 * there was an error processing your payment, please try again
 * or for the unexpected ones, just show the general error page
+
 
 ## Why let it error? ##
 
@@ -296,6 +305,7 @@ If code didn't work: it's *OK* for it to error. Just deal with it.
 
 I think this approach stems from developers getting it into their head that exceptions are somehow bad. They're not. *Not dealing* with errors are bad, but exception handling is there for effecting this. Writing code that errors in an uncontrolled fashion due to suboptimal logic? Also bad, but that's a different thing. Basically if code is supposed to do something, and it *doesn't do it*, then raising an exception is completely the appropriate and expected thing to do.
 
+
 ## Letting the correct code make the decisions ##
 
 Another consideration here is that one ought to pay attention to which code should be responsible for dealing with error situations.
@@ -303,6 +313,7 @@ Another consideration here is that one ought to pay attention to which code shou
 If code "hides" and exception, then it's taking responsibility to deal with it. And if the code in question is inside a method `makePayment()` (for example), then that's the wrong place to be dealing with it. It's not `makePaymentOrDealWithItIfItDoesntWork()`, so that function should not be dealing with it. It's function is to make a booking. That's it. If it doesn't make the booking, it's failed.
 
 Also it's not for this Payments API to decide how to handle an error on my site. It's my site's job. This is presupposing that the entire site / application is compartmentalised into "areas of concern", which I'll discuss in the [MVC basics](12-mvc.md) chapter, but the `makePayment()` function should raise a relevant exception, and let the code that call it decide what to do with it. This should bubble all the way to the top level of the web site, where a given web page should deal with it (display a message or change the output somehow), or just filter all the way up to the site's default error page. If you look at things in the context of the entire web site rather than the immediate code that's raising an exception, it becomes easier to see that bubbling an exception back to the most appropriate code to deal with it makes sense.
+
 
 ## A closer look at an exception ##
 
@@ -412,6 +423,7 @@ try {
 
 ````
 
+
 ## Namespacing exceptions ##
 
 Being able to catch various different exceptions is excellent, but what if one wants to have the same catch block for multiple different exceptions? This is possible too. One can "namespace" exceptions, and then `catch` exception types by namespace:
@@ -440,6 +452,7 @@ try {
 Here we are namespacing our exception by the standard reverse-domain name packaging tactic, throwing one of either a `com.mydomain.myapp.SomeException` or `com.mydomain.myapp.SomeOtherException` from that package: these will be caught by `com.mydomain`. one third of the time this test code will throw a `DifferentException`, and this will be caught by the `any` `catch` block.
 
 Your namespacing doesn't have to follow any specific pattern, other than separating each element by dots. You can catch groups at any dotted partition (ie: in that example above, one could catch `com`, `com.mydomain`, `com.mydomain.myapp` or `com.mydomain.myapp.SomeException`).
+
 
 ## finally ##
 
@@ -503,6 +516,7 @@ try {
 ````
 
 As demonstrated in the previous example, whether this code runs fine or whether that exception is thrown (50% of the time), it doesn't matter: the `finally` block will run, and close that file.
+
 
 ## Conclusion ##
 

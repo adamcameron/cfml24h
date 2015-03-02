@@ -1,9 +1,12 @@
 # Built-in types #
 
 ## Typefulness ##
+
 Firstly, CFML is loosely typed, and dynamically typed. You might hear that it's "typeless": it's not. It's very much not. So get that idea out of your head, and chide anyone who suggests it to you.
 
+
 ### Loosely typed ###
+
 Loosely typed means that one doesn't need to declare a variable's type when declaring the variable. In Java (strongly typed), one might need to do this sort of thing:
 
 ````cfc
@@ -30,7 +33,9 @@ The `person` variable is a `Person`, so we cannot change our mind and assign it 
 
 In CFML we can reassign a variable to be any type, any time we like. It's how we use the variable that matters, not what we declare it to be when first decide to create it.
 
+
 ### Dynamically typed ###
+
 In a statically typed language, only certain operations are available to certain data types. For example, in Java one cannot do this:
 
 ````cfc
@@ -59,7 +64,9 @@ if (product > 400)  // do something
 
 Because the rules for a boolean include "any non-zero numeric value is true", then that code runs fine.
 
+
 ### Curate's egg ###
+
 This is great because it cuts down on a lot of ceremonial boilerplate code, and gets on with it. It is - after all - the computer's job to sort out the menial, repetitive side of code execution, not the developers. The more code just defines what needs doing, rather than the minutiae of how it needs to be done, the better.
 
 This can be a double-edged sword though. In a statically- and strongly-typed language, the compiler can pick up a lot of mistakes during compilation. For example it could be an accident that you used `x` and `y` in that arithmetic expression. In a strongly-typed compiler, that code wouldn't even compile, let along allow you to run it.
@@ -86,7 +93,9 @@ String definitelyAString = "";
 
 And for the CFML engine to not ever try to treat it as anything other than a string. Often this is not necessary, but sometimes it would just make life easier.
 
+
 ## Simple vs complex types ##
+
 A simple type is one that has only one component to it, as opposed to many parts that are internally organised (complex types). Examples of simple types are strings, numerics, dates. A complex type is something like an array or a struct. An array is a collection of ordered elements, each of which have their own value. As a simple type has only one value, one can access it directly, eg:
 
 ````cfc
@@ -108,6 +117,7 @@ Note: as a rule, simple values are passed by value-copy (ie: the entire value is
 
 
 ## Calling methods on a value ##
+
 CFML historically was a procedural language (although this goes back a decade now), so most of its value-manipulation is done via procedural-oriented headless functions, eg:
 
 ````cfc
@@ -130,12 +140,16 @@ One should aim to write as modern code as possible, so I will be advocating usin
 
 A time of writing, the docs for ColdFusion are still headless-function-centric, unfortunately. However a list of all of them can be found here: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions. Lucee only really has docs automatically  generated from the source code, so are not much use beyond syntax guidance.
 
+
 ## Native types ##
+
 CFML actually has quite a number of built-in types, which all have discrete behaviour.
+
 
 ### Simple types ###
 
 #### String ####
+
 The most fundamental data type in CFML is a string. In ColdFusion any literal simple value is by default stored as a string. In Lucee a numeric literal is actually stored as a numeric (etc). However this does not make any difference in how  the value is subsequently treated.
 
 For example, these are *all* strings:
@@ -175,6 +189,7 @@ Where possible, I just use the alternate delimiter in these situations instead o
 Unlike in some other languages, there is no difference between either delimiter.
 
 My personal preference is for using double quotes, but there is absolutely no hard & fast rule here. My rationale is simply that single quotes are more likely to be part of the string (eg: as an apostrophe), than a double-quote will be.
+
 
 ##### String interpolation #####
 
@@ -226,6 +241,7 @@ Documentation for string methods can be found:
 1. ColdFusion: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions#Usingthememberfunctions-SupportedStringmemberfunctions
 
 2. Lucee: has different options, but at present I do not have a link to the docs for its variations.
+
 
 ##### Comparing strings #####
 
@@ -303,7 +319,9 @@ Obviously (?) in a human-based collation order, `é` falls within the vicinity o
 
 Also note that doing comparisons with the comparison operators does a case-*in*sensitive comparison, whereas `compare()` is case-sensitive. To do a case-insensitive comparison using string comparisons, use `compareNoCase()`.
 
+
 ##### Common string methods #####
+
 CFML has a large number of string methods, and they're all well documented so I won't go over all of them here. However here's a summary of some common ones:
 
 ````cfc
@@ -374,6 +392,7 @@ fileName = path.listLast("/"); // file.cfm
 
 Lists have been popular in the past, but are restrictive and slow performers. If you want to use a compound data type, generally an array would be a better fit.
 
+
 ##### Regular expressions #####
 
 CFML has pretty good regular expression support. Regex patterns are not discrete objects, but are just strings which are passed to a relevant method, eg:
@@ -397,6 +416,7 @@ Those are call case sensitive. There are specific case-insensitive variants too:
 
 It is outside the scope of this book to teach regular expression usage. I have however blogged about regular expressions in CFML fairly thoroughly: http://blog.adamcameron.me/2015/01/regular-expressions-in-cfml-link-summary.html
 
+
 ##### CFML strings are Java Strings ######
 
 CFML is a JVM-based language, and CFML compiles down to Java byte code. CFML strings are simply wrappers for java.lang.String objects. One can call any Java String method on a CFML string natively, eg:
@@ -408,13 +428,16 @@ letters = string.toCharArray(); // ["t","h","i","s"," ","i","s"," ","a"," ","s",
 
 Here `toCharArray()` is not a CFML method, it's a native Java one.
 
+
 ##### Documentation for string methods #####
+
 1. ColdFusion: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions#Usingthememberfunctions-SupportedListmemberfunctions
 2. Lucee does not make a special distinction between strings and lists: [NEED A LINK TO SOME DOCS]
 3. Java: http://docs.oracle.com/javase/8/docs/api/java/lang/String.html
 
 
 #### Numeric ####
+
 Natively CFML does not distinguish between integer numbers and floating point ones: it's just got "numeric". Under the hood, these are java.lang.Double objects by default. Well: *by default* on ColdFusion they're strings until they need to be used as a numeric, really:
 
 ````cfc
@@ -434,8 +457,11 @@ answer =  42;
 
 There is no syntax variation to express a literal float as opposed to an integer as there is in some languages.
 
+
 #### Date ####
-Dates in CFML represent a date accurate to the millisecond. There is no literal way to declare a date in CFML, one needs to use a function which returns one, eg:
+
+Dates in CFML represent a date accurate to the millisecond. There is no literal way to declare 
+a date in CFML, one needs to use a function which returns one, eg:
 
 ````cfc
 d = createDate(2011,3,24);
@@ -452,14 +478,21 @@ followingDay = dateAdd("d", 1,dateAsString); // the date 2011-03-25
 
 In the past I strongly recommended against ever using a string when a date was expected, but I have softened on this now. Provided one uses an unambiguous string format, I think it's fine. Note that the format mm/dd/yyyy which people from the United States might use is *not* unambiguous. A reader from USA would think 09/11/2001 is that terrible day we will never forget. However to me - and most people from outside USA in the English-speaking world, that date is November 9, not September 11. It all depends on your locale as to which way round the `d` and the `m` components are considered. If using a string, use some subset of `yyyy-mm-dd  HH:mm:ss`.
 
+
 ##### ODBC date objects #####
+
 CFML has some functions (`createOdbcDate()` etc) to support ODBC-styled date objects ostensibly intended to be used when connecting to ODBC data sources. Neither Lucee nor ColdFusion use ODBC any more (and haven't for over a decade), so these functions are pointless. Data sources all use JDBC these days, and a CFML date object will pass seamlessly through JDBC to the DB. Don't use the ODBC-oriented functions.
 
+
 ##### Localised values #####
+
 CFML has a number of date formatting functions which return strings, eg: `dateFormat()`. These return USA-centric values, and are no good for internationalised sites. All output should be locale-aware, so do not use functions like `dateFormat()`, `parseDateTime()`. Use the localised equivalents: `lsDateFormat()`, `lsParseDateTime()`.
 
+
 ##### Unexpected behaviour #####
+
 When it comes to dates, CFML's aggressive type coercion can be dangerous, and lead to unexpected results. For example `0` is a "valid" date, it will be considered `1899-12-31` which is the zero-date as far as CFML is concerned. Equally `1p` will be interpretted as `1pm` on that date. This is seldom what one wants, so if one starts seeing odd behaviour around dates, check what values you're using.
+
 
 ##### Common date methods #####
 
@@ -484,6 +517,7 @@ As with strings, there are a lot more methods that just those: https://wikidocs.
 
 
 #### Boolean ####
+
 Boolean values in CFML are one of the following three variations:
 
 1. true / false
@@ -524,6 +558,7 @@ Any non-zero numeric value is *intrinsically* true, so there's no need to check 
 ### Complex types ###
 
 #### Array ####
+
 The workhorse complex type in CFML is the array. An array is an ordered collection of elements, where each element is any type of data. Some languages require each array element to be of the same type: not so in CFML. Also the size of the array is dynamic, and the array will grow as needs must. There is no requirement to define the length of the array when declaring it.
 
 Arrays can be declared using array literal syntax:
@@ -554,6 +589,7 @@ secondElementOfThirdRow = magicSquare[3][2]; // 1
 ````
 
 ##### When to use an array #####
+
 Arrays are for ordered collections of - somehow - related things, where there are two collective criteria:
 * there is a sense of order; a first element comes before a second element, and so on;
 * there is no meaningful or usage difference between elements *other than* their sense of ordering.
@@ -622,6 +658,7 @@ As a rule of thumb, if a collection element can be given a meaningful label that
 
 
 ##### Sparse arrays #####
+
 Not all array elements need to be populated:
 
 ````cfc
@@ -655,6 +692,7 @@ if (letters.isDefined(2)){
 ````
 
 I would say that if you find yourself creating a "sparse array" (wherein not all elements are defined), then an array might not really be the best choice to store your data. However this situation will legitimately crop up every now and then. But it's worth questioning yourself if you think a sparse array is the correct approach.
+
 
 ##### Common array methods #####
 
@@ -705,9 +743,11 @@ The first point there is obvious, and doesn't require any further expansion.
 
 The second point does tend to catch people out: a struct's keys are not ordered. Obviously if one is to iterate over a struct, then each key/value pairing needs to be exposed in turn, and in a given system that ordering might be predictable: it might be the order the pairs were added to the struct, or it might be in alphabetical order by key name. Or some other sequence. The thing is there's no standard, so the ordering of struct keys cannot be relied on. This is at odds with how humans think about such things. In the name example above, "clearly" there's a sense that the `firstName` comes first, the `middleName` comes next, rounded out by the `lastName`. But that's a human conceit, and a struct does not care about that. Whilst it's entirely possible to iterate over a struct, with each step exposing the "next" key/value pair, structs are generally designed to be accessed directly via specific key. I guess this is a difference between structs and arrays. Arrays are *not* generally accessed via specific index; they are treated as an entire collection. Whereas a struct *is* accessed directly, and generally (*generally*) not iterated over.
 
+
 ##### Syntax variations  #####
 
 There are a few different syntax notation styles for accessing struct elements. I have already mentioned these in the section on variables, so I will just summarise them here.
+
 
 ###### Dot notation ######
 
@@ -723,6 +763,7 @@ writeOutput(fullName.firstName); // outputs the value for the element with key "
 ````
 
 One consideration here is that as CFML is not case-sensitive (`FULLNAME.FIRSTNAME` is the same as `fullname.firstname`, and is the same as `fUlLnAmE.fIrStNaMe`), there is no guarantee as to the casing of the key when it is first declared using this notation. That assignment statement will result in the fullName struct containing a key `FIRSTNAME`, because CFML upper-cases struct key names when dot notation is used. This is because of slightly performance considerations when accessing the keys later. So if key-case is important - for example the struct will be shared with a case-sensitive language like JavaScript - don't use dot notation for *setting* struct keys.
+
 
 ###### Bracket / Associative array notation ######
 
@@ -750,6 +791,7 @@ fullName["lastName"] = "Smith";
 fullNameAsJson = serializeJson(fullName); // {"FIRSTNAME":"Rosie","lastName":"Smith"}
 ````
 
+
 ##### Struct literal declaration considerations #####
 
 By default struct-literal notation uses the dot-notation rules for key names. If one wants to preserve case in a key name, or use non-simple key names, simply use strings instead of literals for the key names:
@@ -764,6 +806,7 @@ someStruct = {
 }
 ````
 
+
 ##### Common struct methods #####
 
 ````cfc
@@ -773,6 +816,7 @@ keys = person.keyArray(); // ["firstName", "lastName"]
 hasMiddleName = person.keyExists("middleName"); // false
 numberOfKeys = person.count(); // 2
 ````
+
 
 #### Record sets ####
 
@@ -802,6 +846,7 @@ Which is represented as:
 <tr><td>4</td><td>4</td><td>Carol</td><td>Davis</td></tr>
 </tbody></table>
 
+
 ##### Syntax #####
 
 Note that there is no literal syntax for creating a recordset object: one must use the `queryNew()` function. Generally one would not want to create a literal record set anyhow: they are the results of calls to external resources (DB, file system, directories, etc).
@@ -820,6 +865,7 @@ individual elements can, likewise, be set using the same syntax:
 ````cfc
 people.id[1] = 5; // that row becomes 5, Wendy, Xiang
 ````
+
 
 ##### Common record set functions #####
 
@@ -845,7 +891,6 @@ firstNames = valueList(people.firstName); // Wendy,Yvette,Angela,Carol,Frances,H
 Notes:
 * At time of writing, Lucee has not yet implemented the `getRow()` method.
 * Note the non-standard way of referencing a column when using `valueList()`. It's a static value, and must reference the query and the column name, using dot notation. At time of writing, only the headless function has been implemented; there is no OO method for this (on either Lucee or ColdFusion).
-
 
 
 #### Functions ####
@@ -970,6 +1015,7 @@ There's not much more to XML obejct manipulation beyond that.
 
 
 #### Other ####
+
 There are other inbuilt data types which I won't cover here:
 
 * image
