@@ -127,9 +127,56 @@ There is an endless number of OO terms out there which I have not mentioned here
 CFML's OO implementation is reasonably fully-featured when considering the requirements and behaviour of dynamic languages, compared to the usually more rigid language rules of more staticly typed languages which might benefit from some constructs that CFML simply doesn't need.
 
 
+## Components ##
 
+A class is defined via a CFC file (**C**old**F**usion **C**omponent). Only a single class can be defined per file, and the class definition is the only code allowed in the file. This is as opposed to other languages which allow multiple classes to be defined in a single source code file, and other procedural code to also reside in the same file.
 
+The syntax for defining a class is:
 
+````cfc
+component {
+	
+}
+````
+
+One does not need to specify the name of the class as it's inferred from the file name.
+
+A class definition can have a number of modifying attributes which are specified as name/value pairs similar to how an HTML tag might specify attributes, eg:
+
+````cfc
+component extends=ParentClass implements=SomeInterface {
+	
+}
+````
+
+It's slightly unorthodox to have to specify the `=` in there, but this is because one can specify any sort of metadata in the component declaration, and the only way the compiler can work out what's an attribute and what's its value is by having the syntax `attribute=value`, eg:
+
+````cfc
+component specialAnnotation=annotationValue {
+	
+}
+````
+
+If the value has embedded spaces, one needs to quote it:
+
+````cfc
+component specialAnnotation="Annotation Value" {
+	
+}
+````
+
+This sort of metadata can be used in any way. Often development frameworks will use annotations for special bespoke extensibility. The metadata can be fetched by calling `getMetadata()` on an object:
+
+````cfc
+object = new WithAnnotation();
+writeDump(getMetadata(object));
+````
+
+Which will yield something along the lines of:
+
+<img src="../images/4/componentMetadata.png">
+
+(see the bespoke metadata as that last entry there).
 
 
 

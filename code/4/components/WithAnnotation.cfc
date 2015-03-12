@@ -1,0 +1,3 @@
+component specialAnnotation="Annotation Value" {
+	
+}
