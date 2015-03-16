@@ -23,3 +23,36 @@ The JVM itself runs continuously in the background, unlike some other language's
 
 
 ## Scopes ##
+
+As mentioned above, scopes are objects into which variables go. There are several scopes that the CFML server maintains, and all variables go into one or other of these scopes. Each scope has two significant characteristics:
+
+
+### Access/availability ###
+
+Most scopes are avaialble to all code. That said one should exercise good judgement and sound architectural practices in one's code, so whilst server-wide variables might be available to the code within a method within a class, this does not mean one should access it directly just because one can. One should encapsulate and decouple code and practise information hiding as much as possible in one's code.
+
+Code is executed in a context, and that context might be contained within other contexts. For example all code runs in the context of a JVM; within that a given CFML application also has its own context, and within that a visitor to the application (ie: browsing to the web site) can have their own session which sticks with them for the duration of their visit. From a code-centric point of view, a component's code is run in a seprate memory space (so: context) from the code that calls the component's code; and functions being executed likewise have their own context to store variables in which is separate again from the component itself, and the calling code.
+
+A couple of scopes have localised context, and variables within them are only accessible within that context. For example the context of the `local` scope within a function is only accessible to the code within that calling instance of that specific function. Other functions called within the first function have a separate local scope. And calling code has no access to a function's local scope.
+
+
+### Lifetime ###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
