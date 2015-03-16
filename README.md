@@ -24,7 +24,7 @@ Cheers for any help!
 - [Error handling](chapters/06-error_handling.md) - FIRST DRAFT
 - [TDD](chapters/07-tdd.md) - PLACEHOLDER
 - [Clean code](chapters/08-clean_code.md) - PLACEHOLDER
-- [Request/response process & scopes](chapters/09-request_response.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - PLACEHOLDER
+- [Request/response process & scopes](chapters/09-request_response.md) - the request/response stuff will be based on http://blog.adamcameron.me/2012/10/the-coldfusion-requestresponse-process.html - DRAFT IN PROGRESS
 - [Application framework](chapters/10-application_framework.md) - PLACEHOLDER
 - [ORM](chapters/11-orm.md) - PLACEHOLDER
 - [MVC basics](chapters/12-mvc.md) - PLACEHOLDER
