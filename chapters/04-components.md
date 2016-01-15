@@ -176,7 +176,7 @@ Which will yield something along the lines of:
 
 <img src="../images/4/componentMetadata.png">
 
-(see the bespoke metadata as that last entry there).
+(see the bespoke metadata as that penultimate entry there).
 
 
 

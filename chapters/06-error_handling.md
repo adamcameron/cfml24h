@@ -111,7 +111,7 @@ try {
 This will result in this output:
 
 ````cfc
-type: java.lang.ArithmeticException; message: Division by zero is not possible
+type: Expression; message: Division by zero.
 ````
 
 But because this is a runtime error, we're given an exception to deal with, and our *code* can deal with it.
