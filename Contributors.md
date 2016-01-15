@@ -6,3 +6,4 @@ Thanks to the following people:
 * Matt Busche
 * Ryan Guill
 * Andy Myers
+* James Mohler

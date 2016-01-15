@@ -6,6 +6,11 @@ Start with something like Nolan's presentation at CFSummit 2015 re MVC without a
 Show how an established framework like FW/1 can remove a lot of hand coding if a dev is tempted to DIY.
 
 
+For pull requests, initially let's just do section subheadings to first arrive at a structural consensus.
+
+Don't submit pull requests for content yet.
+
+
 ### FW/1 ###
 
 
