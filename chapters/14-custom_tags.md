@@ -47,10 +47,10 @@ We could then use `<b:tag />` anywhere on the page.  Other options include
 
 
 
-*	<b3:tag />
-*	<bs:tag />
-*	<boot:tag />
-*	<bootstrap:tag />
+*	&lt;b3:tag />
+*	&lt;bs:tag />
+*	&lt;boot:tag />
+*	&lt;bootstrap:tag />
 
 
 #Complete Example#
