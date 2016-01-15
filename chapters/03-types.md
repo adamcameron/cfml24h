@@ -83,7 +83,7 @@ It's true that one is opened-up to a greater risk of runtime errors with runtime
 
 One thing CFML's loose/dynamic typing doesn't help us with at all is within the IDE. Writing Java code in Eclipse or C# code in Visual Studio is a pleasure, because the IDE can help you at every turn, and knows whenever you're writing code that won't compile. It can even write code for you in some situations. This is - for all intents and purposes - impossible with CFML. Still: I've got by for over a decade (as have really a lot of people) without IDE bells and whistles, so whilst the bells and whistles are bloody handy, it's not like one is paralysed if one doesn't have them.
 
-Another very frustrating shortcoming of CFML is that it falls over itself to be dynamically typed. So one can have a variable containing "1P", and ColdFusion (but not Lucee) will interpret that as "1899-12-30 13:00:00". "Dec 30 1899" is CFML's "zero" date, so ColdFusion is seeing "1p" as "1pm" there, and without the date component, assumes the zero-date for all other date parts. This is very annoying, but is an example of "dynamic typing gone mad". And this  is one of many situations in which ColdFusion (and to a lesser degree Lucee) will fall over themselves to misinterpret your  intent under the guise of trying to make sense of your code.
+Another very frustrating shortcoming of CFML is that it falls over itself to be dynamically typed. So one can have a variable containing "1P", and CFML will interpret that as "1899-12-30 13:00:00". "Dec 30 1899" is CFML's "zero" date, so ColdFusion is seeing "1p" as "1pm" there, and without the date component, assumes the zero-date for all other date parts. This is very annoying, but is an example of "dynamic typing gone mad". And this  is one of many situations in which CFML will fall over itself to misinterpret your  intent under the guise of trying to make sense of your code.
 
 I would *love* to be able to do this in CFML:
 
@@ -113,7 +113,7 @@ writeOutput(person.firstName); // a reference to just "Emma"
 
 I'll explain arrays / structs further down, but note how with simple values there's just the one part, whereas with a complex value one can reference the entire  value, or an individual part of the value. In this case I use dot-notation to reference a struct's individual element.
 
-Note: as a rule, simple values are passed by value-copy (ie: the entire value is duplicated); complex values are passed by reference-copy (only the reference is copied, not the value the reference points to). Except for arrays in ColdFusion, which are also passed by value-copy. Arrays in Lucee are passed by reference-copy. Also note that nothing in CFML is "passed by reference" in the definitive sense of that concept.
+Note: as a rule, simple values are passed by value-copy (ie: the entire value is duplicated); complex values are passed by reference-copy (only the reference is copied, not the value the reference points to). Except for arrays in ColdFusion (but not Lucee), which are also passed by value-copy. Also note that nothing in CFML is "passed by reference" in the definitive sense of that concept.
 
 
 ## Calling methods on a value ##
@@ -130,15 +130,9 @@ name = "Harry";
 nameBackwards = name.reverse(); // yrraH
 ````
 
-Indeed with Lucee, one can even call a method on a literal:
-
-````cfc
-nameBackwards = "Ida".reverse(); // adI
-````
-
 One should aim to write as modern code as possible, so I will be advocating using methods rather than headless functions. This makes sense as the CFML one writes will be OO, so it makes for more uniform code to also use CFML's native OO features too.
 
-A time of writing, the docs for ColdFusion are still headless-function-centric, unfortunately. However a list of all of them can be found here: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions. Lucee only really has docs automatically  generated from the source code, so are not much use beyond syntax guidance.
+A time of writing, the docs for ColdFusion are still headless-function-centric, unfortunately. However a list of all of them can be found here: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions.
 
 
 ## Native types ##
@@ -188,7 +182,7 @@ Where possible, I just use the alternate delimiter in these situations instead o
 
 Unlike in some other languages, there is no difference between either delimiter.
 
-My personal preference is for using double quotes, but there is absolutely no hard & fast rule here. My rationale is simply that single quotes are more likely to be part of the string (eg: as an apostrophe), than a double-quote will be.
+My personal preference is for using double quotes, but there is absolutely no hard & fast rule here. My rationale is simply that single quotes are more likely to be part of the string (eg: as an apostrophe), than a double-quote will be. If I was to be pedantic, I'd also observe that " is a quotation mark, but ' is actually an aporstrophe (it is *not* a single quote), so it doesn't make a great deal of sense to use an apostrophe as a quote. But as I said: that's pedantry.
 
 
 ##### String interpolation #####
@@ -204,7 +198,7 @@ writeOutput(greeting); // G'day Michelle
 In CFML one can have any expression at all between the delimiting `#` characters, provided it resolves to a string, or can be coerced into a string:
 
 ````cfc
-writeOutput("Today is #dateFormat(now(), "dddd, d mmmm yyyy")#"); // Today is Saturday, 24 January 2014
+writeOutput("Today is #now().dateFormat("dddd, d mmmm yyyy")#"); // Today is Saturday, 24 January 2014
 ````
 
 Notice in the expression above I can use double-quotes quite happily even though the string delimiter in this case is itself a double quote. This is valid because the expression is evaluated as a separate unit to the output of the string.
@@ -215,7 +209,7 @@ An example of type-coercion here would be this:
 writeOutput("Today is #now()#"); // Today is Today is {ts '2015-01-24 14:30:30'}
 ````
 
-`now()` returns a date, but to interpolate it, the expression's value needs to be a string, so CFML will automatically convert the date into a string (resulting in that rather unwieldy "{ts '2015-01-24 14:30:30'}"). This demonstrates CFML's automatic casting can be a bit "generic", hence using `dateFormat()` in the first example  to make the output more human readable. As you probably worked out `dateFormat()` takes a date value and converts it to a string, using the second argument as a formatting string.
+`now()` returns a date, but to interpolate it, the expression's value needs to be a string, so CFML will automatically convert the date into a string (resulting in that rather unwieldy "{ts '2015-01-24 14:30:30'}"). This demonstrates CFML's automatic casting can be a bit "generic", hence using `dateFormat()` in the first example  to make the output more human readable. As you probably worked out `dateFormat()` converts a date object to a string, using the argument as a formatting string.
 
 Note that CFML cannot automatically coerce any aribitrary type back to a string. It won't coerce an array or a struct, for argument's sake:
 
@@ -233,7 +227,7 @@ It would be reasonable if CFML automatically coerced a struct or array into - fo
 To use a literal `#` character in a string, simply escape it by doubling it:
 
 ````cfc
-writeOutput("CFML uses # as its string interpolation delimiter"); // CFML uses # as its string interpolation delimiter
+writeOutput("CFML uses ## as its string interpolation delimiter"); // CFML uses # as its string interpolation delimiter
 ````
 
 Documentation for string methods can be found:
@@ -272,7 +266,7 @@ However when comparing *strings*, those two are not the same. To force CFML to c
 s1 = "7";
 s2 = "007";
 
-writeOutput(compare(s1, s2); // 1
+writeOutput(s1.compare(s2)); // 1
 ````
 
 `compare()` returns `-1`, `0` or `1` depending on whether the first string is less than, equal to or greater than the second string. Note that the result from `compare()` *cannot* clearly be used in a boolean condition because the `less than` (`-1`) and `greater than` (`1`) results equate to a boolean `true`, and the `equals` (`0`) result equates to boolean `false`. This can be misleading:
@@ -282,7 +276,7 @@ writeOutput(compare(s1, s2); // 1
 s1 = "7";
 s2 = "007";
 
-if (compare(s1, s2)){
+if (s1.compare(s2)){
 	// they're NOT equal
 }else{
 	// they ARE equal
@@ -296,7 +290,7 @@ This is one situation in which it's better to be explicit:
 s1 = "7";
 s2 = "007";
 
-if (compare(s1, s2) == 0){
+if (s1.compare(s2) == 0){
 	// they're equal
 }else{
 	// they're NOT equal
@@ -390,7 +384,7 @@ path = "/path/to/file.cfm";
 fileName = path.listLast("/"); // file.cfm
 ````
 
-Lists have been popular in the past, but are restrictive and slow performers. If you want to use a compound data type, generally an array would be a better fit.
+Lists have been popular in the past, but are restrictive and slow performers. If you want to use a compound data type, generally an array would be a better fit. Try to restrict usage of list functionality to converting a string to an array, and then performing other manipulation on the array.
 
 
 ##### Regular expressions #####
@@ -432,8 +426,7 @@ Here `toCharArray()` is not a CFML method, it's a native Java one.
 ##### Documentation for string methods #####
 
 1. ColdFusion: https://wikidocs.adobe.com/wiki/display/coldfusionen/Using+the+member+functions#Usingthememberfunctions-SupportedListmemberfunctions
-2. Lucee does not make a special distinction between strings and lists: [NEED A LINK TO SOME DOCS]
-3. Java: http://docs.oracle.com/javase/8/docs/api/java/lang/String.html
+2. Java: http://docs.oracle.com/javase/8/docs/api/java/lang/String.html
 
 
 #### Numeric ####
@@ -473,7 +466,7 @@ Due to CFML's aggressive type coercion, one can generally get away with using a 
 
 ````cfc
 dateAsString = "2011-03-24";
-followingDay = dateAdd("d", 1,dateAsString); // the date 2011-03-25
+followingDay = dateAdd("d", 1, dateAsString); // the date 2011-03-25
 ````
 
 In the past I strongly recommended against ever using a string when a date was expected, but I have softened on this now. Provided one uses an unambiguous string format, I think it's fine. Note that the format mm/dd/yyyy which people from the United States might use is *not* unambiguous. A reader from USA would think 09/11/2001 is that terrible day we will never forget. However to me - and most people from outside USA in the English-speaking world, that date is November 9, not September 11. It all depends on your locale as to which way round the `d` and the `m` components are considered. If using a string, use some subset of `yyyy-mm-dd  HH:mm:ss`.
