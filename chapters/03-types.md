@@ -59,7 +59,7 @@ product = x * y;
 The CFML runtime will go "yeah, x and y have a numeric values, so I can multiply those no worries". This extends to most operations with in-build CFML types: if the runtime can make sense out of your code, it will. For example, our product variable can be used as a boolean too:
 
 ````cfc
-if (product > 400)  // do something
+if (product)  // do something
 ````
 
 Because the rules for a boolean include "any non-zero numeric value is true", then that code runs fine.
