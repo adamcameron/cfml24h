@@ -1,4 +1,4 @@
-# Function Expressions (and iteration methods) #
+# Functional programming concepts #
 
 NOTES:
 Closures and iteration techniques and rationales
