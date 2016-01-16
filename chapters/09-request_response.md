@@ -47,17 +47,17 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###Server###
-**Description:**
+**Description:** There are variable that exist across all applications on a server. Any change done to these variables will be seen on all request for all users on all applications.
 
-**Usage:**
+**Usage:** ColdFusion exposes some of its internal variables here.
 
-**Notes:**
+**Notes:** This scope should be avoided because it has such a wide impact. It may lead to performance issues. 
 
 **Example:**
 
 
 ###Application###
-**Description:**
+**Description:** This variables exist for an entire application. These are setup in `application.cfc` in the `onApplicationStart()` function
 
 **Usage:**
 
@@ -68,11 +68,11 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###Session###
-**Description:**
+**Description:** These are initially setup in `application.cfc`, but can be used and modified anywhere  in the `onSessionStart()` function
 
 **Usage:**
 
-**Notes:**
+**Notes:** Session management must be turned on to use these
 
 **Example:**
 
@@ -103,7 +103,7 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###Form###
-**Description:**
+**Description:** Variables that were submitted on a POST (`<form method="post">`) operation
 
 **Usage:**
 
@@ -115,7 +115,7 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###URL###
-**Description:**
+**Description:**  Variables that were submitted on a GET (`<form method="get">` or `<a href="mypage.cfm?ID=">`) operation
 
 **Usage:**
 
@@ -127,7 +127,7 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###CGI###
-**Description:**
+**Description:** This are variables associated with the request from the web server's point of view.
 
 **Usage:**
 
