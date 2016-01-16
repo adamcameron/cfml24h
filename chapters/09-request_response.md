@@ -29,27 +29,159 @@ As mentioned above, scopes are objects into which variables go. There are severa
 
 ### Access/availability ###
 
-Most scopes are avaialble to all code. That said one should exercise good judgement and sound architectural practices in one's code, so whilst server-wide variables might be available to the code within a method within a class, this does not mean one should access it directly just because one can. One should encapsulate and decouple code and practise information hiding as much as possible in one's code.
+Most scopes are available to all code. That said one should exercise good judgement and sound architectural practices in one's code, so whilst server-wide variables might be available to the code within a method within a class, this does not mean one should access it directly just because one can. One should encapsulate and decouple code and practise information hiding as much as possible in one's code.
 
-Code is executed in a context, and that context might be contained within other contexts. For example all code runs in the context of a JVM; within that a given CFML application also has its own context, and within that a visitor to the application (ie: browsing to the web site) can have their own session which sticks with them for the duration of their visit. From a code-centric point of view, a component's code is run in a seprate memory space (so: context) from the code that calls the component's code; and functions being executed likewise have their own context to store variables in which is separate again from the component itself, and the calling code.
+Code is executed in a context, and that context might be contained within other contexts. For example all code runs in the context of a JVM; within that a given CFML application also has its own context, and within that a visitor to the application (ie: browsing to the web site) can have their own session which sticks with them for the duration of their visit. From a code-centric point of view, a component's code is run in a separate memory space (so: context) from the code that calls the component's code; and functions being executed likewise have their own context to store variables in which is separate again from the component itself, and the calling code.
 
 A couple of scopes have localised context, and variables within them are only accessible within that context. For example the context of the `local` scope within a function is only accessible to the code within that calling instance of that specific function. Other functions called within the first function have a separate local scope. And calling code has no access to a function's local scope.
 
 
 ### Lifetime ###
 
+Some scopes have very long lifetime some are very short.
+
+
+## List of Scopes ##
+
+Notes: This section could be done in either topical order or alphabetical order or most used to least used. It is not good to start this topic with Server scope as it is the most rare, but it does make sense when going from widest to narrowest scope. Holding off on details until there is consensus on format and order
+
+
+###Server###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Application###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Session###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Request###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Variables (outside of CFC)###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Form###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###URL###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###CGI###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Cookie###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Client###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+Notes: CFC scopes
+
+
+###This###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Variables (inside of a CFC)###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Local###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###var (Keyword)###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Arguments###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Super###
+*Description: *
+*Usage: *
+*Notes: *
 
 
 
+###Un scoped###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+Notes: Custom tag scopes
+
+###ThisTag###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Attributes###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+###Caller###
+*Description: *
+*Usage: *
+*Notes: *
+
+
+Notes: Error handling
+
+###Cfcatch###
+*Description: *
+*Usage: *
+*Notes: * There is also a tag called cfcatch
 
 
 
-
-
-
-
-
-
+Notes: And then threads, closures, cfhttp, cfftp, and other
 
 
 
