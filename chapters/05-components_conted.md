@@ -1,4 +1,4 @@
-# Components cont'ed #
+# OO wth CFML cont'ed #
 
 NOTES:
 General intent here is that the topic is too big to cover in one chapter, so this is overspill.
