@@ -1,4 +1,4 @@
-# Basic databbase persistence with ORM #
+# Basic database persistence with ORM #
 
 NOTES:
 Both CFML syntax, but general narrative of the intent of ORM: which is not a permanent solution, but a quick-to-market first version.
