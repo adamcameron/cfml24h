@@ -1,4 +1,4 @@
-# Components #
+# OO with CFML #
 
 ## Object orientation, but quickly ##
 
