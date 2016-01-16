@@ -70,60 +70,79 @@ I'm writing this from the ground up, so should be suitable for a newbie to CFML.
 
 Well... take that with a grain of salt. It's a cliched title, but it sets the scene as to the general approach I shall take. I am not going to time how long it takes to read and absorb each chapter, but I will be breaking sections down into bite-sized chunks. That said, you should probably assume the book-based part of the learning process might take an hour per section, but it's then over to you to actually learn it. One cannot learn anything from just reading a book, these pages are just information dissemination. It's up to you to then take that information and learn from it. The code examples will be minimal: you're expected to then write your own code and experiment sufficiently to become comfortably with it. As one of my tutors at polytech (back in the early 1990s this was) was wont to say "I'm not here to teach, you're here to learn".
 
-Also I shall not be covering everything in CFML in this book. I will be teaching the syntax, data types, constructs, and elements of functionality sufficient to get you productive. This is not a reference (as some tomes tend to be), there is online documentation for that. There's also an awful lot of CFML that one simply doesn't need to know. There's perhaps 500 top-level functions in the CFML language, and I've probably not used half of them. And there's possibly 100 tags and you should only ever used about a dozen of them. There is no value in knowing a lot of this stuff. There is also no value in teaching about them all, because a function is a function... once one knows how to use functions, one can then use the online docs to reference the rest of them.
+Also I shall not be covering everything in CFML in this book. I will be teaching the syntax, data types, constructs, and elements of functionality sufficient to get you productive. This is not a reference (as some tomes tend to be), there is online documentation for that. There's also an awful lot of CFML that one simply doesn't need to know. There's perhaps 500 top-level functions in the CFML language, and I've probably not used half of them. And there's possibly 100 tags and you should only ever used about *a dozen* of them. Are the rest of them just faciliate bad practice. There is no value in knowing a lot of this stuff. There is also no value in teaching about them all, because a function is a function... once one knows how to use functions, one can then use the online docs to reference the rest of them.
 
 Similarly stuff like generating images, PDF files, charts, what-have-you - all of which CFML has support for - is tangential to the core language, and I don't think there's any need to discuss that sort of thing here. I'm going to get you a good handle on the core of CFML, and that'll enable you to work the rest out for yourself.
 
-I'm also not going to waste time discussing how to install either ColdFusion or Lucee: this is already well documented by the vendors themselves. Obviously at some point you are going to have to install ColdFusion so as to run some code, but not straight away. I'm not going to discuss how to install a  database server: again, the vendors have done this. You're not going to need a DB for anything in this book anyhow. I'm not going to discuss HTML, HTTP, server administration, maintenance or security. None of that stuff has anything to do with the CFML language, and there are better resources around for all that stuff. I hasten to add this is all vital information for you to know, but it's not my job here to teach you it. This is about CFML.
-
-
-## Running the code ##
-
-You've got a few choices. The is an online service [trycf.com](http://trycf.com) which allows one to type & run CFML code entirely online. So there's no installation necessary to use that, but it's fairly limited in what it can do: you're limited to a single file, for one thing.
-
-There is also [CommandBox from Ortus Solutions](http://www.ortussolutions.com/products/commandbox). This is easy to install (download, unzip, run), and I shall be using this for my code examples in the book. This has both a REPL for running small amounts of code interactively, but also includes the ability to run file-based code as well.
-
-If you want a local install, you could download and install [ColdFusion Express](https://www.adobe.com/products/coldfusion-family.html#content-dotcom-en-products-coldfusion-family-bodycontent1-ttt-1), which - again - is download, unzip, run. The benefit of installing ColdFusion is that one can run entire applications with it, so is perhaps easiest in the long run.
+I'm also not going to waste time discussing how to install (beyond superficially) or administer ColdFusion: this is already well documented by Adobe. I'm not going to discuss how to install a  database server: again, the vendors have done this. I'm not going to specifically discuss HTML, HTTP, or ColdFusion maintenance or security. None of that stuff has anything to do with the CFML language, and there are better resources around for all that stuff. I hasten to add this is all vital information for you to know, but it's not my job here to teach you it. This is about CFML. This book will cover enough to get you learning CFML, and no more. As I said: it's up to you to follow-up in those other areas by yourself.
 
 
 ## IDE? ##
 
-You don't need one. I don't use one. All you need is a text editor, although one with CFML support might be helpful once you move on from just a few lines of code. For my coding at work I use [SublimeText](http://www.sublimetext.com/), with the [CFML plug-in](https://packagecontrol.io/packages/CFML). For most of the code in this book using CommandBox's REPL will probably actually be fine. Whilst CFML needs to be compiled to run, this is all handled via the servlet, when the code is requested. It's transparent from your perspective: there is no build process or anything like that, and you never even see the compiled files. The servlet takes care of all that for you.
+You don't need one. I don't use one. All you need is a text editor, although one with CFML support might be helpful once you move on from just a few lines of code. For my coding at work I use [SublimeText](http://www.sublimetext.com/), with the [CFML plug-in](https://packagecontrol.io/packages/CFML). Whilst CFML needs to be compiled to run, this is all handled via the servlet, when the code is requested. It's transparent from your perspective: there is no build process or anything like that, and you never even see the compiled files. The servlet takes care of all that for you. All you need to do is save CFML code to a file, then use a browser to browse to it which will in turn result in the ColdFusion server doing everything else automatically.
 
 
-## CommandBox ##
+## Running the code ##
 
-Go and download it and unzip it into a directory, eg C:\apps\commandbox. Stick that directory in your path (just to save time having to type it in the whole time). Drop down to a command prompt and type:
+To run the code you will need to download and install [ColdFusion Express](https://www.adobe.com/products/coldfusion-family.html#content-dotcom-en-products-coldfusion-family-bodycontent1-ttt-1).
+
+### Installing ColdFusion Express ###
+
+It's just a zip file. So unzip it somewhere. I usually unzip it in `C:\apps\adobe\coldfusion\11\express`, but I mostly have that level of isolation because I have a lot of different CFML installs from various vendors running at once (eg, I also have  `adobe\coldfusion\11\enterprise`, `lucee\4.5`, `railo\4.2` all in that apps directory).
+
+### File locations ###
+
+Occasionally - like in the paragraph following this one - I will refer to files within the ColdFusion install directory. In my case, as per above, my install directory is `C:\apps\adobe\coldfusion\11\express`, and I will refer to paths relative to that like this: `[coldfusion]\some\path\here\'.
+
+I will also occasionally refer to files in the web root. By default this is in `[coldfusion]\cfusion\wwwroot`. I'll refer to that as `[webroot]`. The web root can be configure to be anywhere, but that's outwith the scope of this discussion here. I'll discuss best practices for how to home files later (CHAPTER TBC).   
+
+I'm afraid you *nix people that I am a perennial Windows user, so everything I do here will be Windows-centric, in the few situations it is relevant (which is hardly ever, in this book). You're a clever bunch so you'll be able to translate my Windows instructions to *nix ones. And if you can't: more fool you for using *nix ;-)
+
+### Running ColdFusion Express ###
+
+1. start a command prompt.
+2. execute `[coldfusion]\cfusion\bin\cfstartup.bat`
+3. that'll start spewing a whole lot of bumpf out on the screen, which should culminate in something like this, eventually:
+
+```
+INFO: Server startup in 15223 ms
+```
+
+(This laptop is old and slow, so hopefully yours will be a bit faster than that).
+
+Note it might not be the last thing that displays, you're likely to get an error about `PDFgServlet`, but don't worry about that. It's related to a ColdFusion feature we'll not be needing for our purposes, and it's indicative of anything going wrong anyhow.
+
+By default, the web server ColdFusion Express runs listens on port 8888, so the best way to check if ColdFusion is up and running is to browse to http://localhost:8888/CFIDE/administrator. If that presents a login screen: you're up and running. If it gives an error, then you have some troubleshooting to do: go to Google. Well: before going to Google, the CLI might have output an error for you, so grab that and google it. This book is not about troubleshooting ColdFusion installs, and there's stacks of resources out there to cover this, so it should be easy enough to get it.
+
+If ColdFusion is up and running, you can quickly test your install by doing this:
+
+1. create a text file containing this code:
+
+```
+<cfdump var="#server#">
+```
+
+2. Save it as `[webroot]\serverDump.cfm` (or save it within a subdirectory if you want to organise stuff better: up to you). All basic CFML script files should be saved with a .cfm extension.
+
+3. browse to http://localhost:8888/serverDump.cfm. You should get something like this:
+
+<img src="../images/0/serverDump.png">
+
+(I've excised some stuff from that, but you get the idea).
+
+4. If you see something like that: you're good to go.
 
 
-    > box repl
+### Running the code in this book ###
 
+In general, to run CFML code: save it in a file, and then browse to the URL of that file. There's more to it than that, but for the purposes of running some code examples: that's enough knowledge to work with.
 
-All things going well, you should be greeted with something like this:
+The code samples in this book *might* be complete enough to simply copy and paste into a file, save it, and browse to it to see the results, but I make no promises in this regard. A lot of teaching material falls over itself to provide self-contained code examples so that that approach works all the time. This engenders a bit of laziness on the part of the person doing the learning, so I'm not going to make a point of encouraging that laziness. You're reading this to learn CFML, so this will mean active effort on your part, which might mean giving some thought to earlier material to write code which will set the ground work for a given code snippet to work. Now... I will *attempt* to make the examples stand-alone, but this won't always be the most expedient way to get the point across, so... well... be warned. Some effort on your part to facilitate your own learning might be require here. In general one learns by *doing*, not simply reading, or not simply by following instructions. I'm doing you a favour here, really. Honest. 
 
+One thing I will try very hard not to do is to require you to flick *forward* in the book to understand something. All code examples should only ever build on what you've already done. I will however assume that once I've said / demonstrated something that you've taken the time to remember / understand it.
 
+Also for any given code example, I reckon you're well placed to mess around with it a bit to try different variations of what I demonstrate, and see what happens: understanding the variations of how code can work is gold when understanding it. I will also presuppose you will take it upon yourself to RTFM on any statement, function, tag etc I mention. As I said earlier: this is a not a reference... the docs are for that. You need to read the docs. You. Need. To. Read. The. Docs. Also I'll deal with general programming concepts which are not specific to CFML. Go read up on those too. EG: when I talk about `switch` statements in the [Flow control structures](02-flow_control.md) chapter, go read what Wikipedia has to say about [switch statements](https://en.wikipedia.org/wiki/Switch_statement). It's really worth properly *understanding* these concepts.
 
-    C:\temp>box repl
-    Enter any valid CFML code in the following prompt in order to evaluate it and print out any results (if any)
-    Type 'quit' or 'q' to exit!
-    CFSCRIPT-REPL:
+## OK... ##
 
-From there type in:
-
-    writeOutput("G'day World");
-
-
-and press enter (I'm going to assume you know how to type stuff from now on, OK?)
-
-You will get something like this:
-
-
-    Type 'quit' or 'q' to exit!
-    CFSCRIPT-REPL: writeOutput("G'day World");
-    => G'day World
-    CFSCRIPT-REPL:
-
-
-Cool. We're off...
-
-(NB: yeah, I know that wasn't a whole hour. There's no point in being too slavish about these things).
+... let's get on with it.
