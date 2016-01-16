@@ -47,78 +47,78 @@ Notes: This section could be done in either topical order or alphabetical order 
 
 
 ###Server###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 ###Application###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 ###Session###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Request###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 ###Variables (outside of CFC)###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Form###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###URL###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###CGI###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Cookie###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Client###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
@@ -126,94 +126,94 @@ Notes: CFC scopes
 
 
 ###This###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Variables (inside of a CFC)###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Local###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###var (Keyword)###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Arguments###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 ###Super###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 
 ###Un scoped###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 Notes: Custom tag scopes
 
 ###ThisTag###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 ###Attributes###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
-
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 ###Caller###
-*Description:*
-*Usage:*
-*Notes:*
-*Example:*
+**Description:**
+**Usage:**
+**Notes:**
+**Example:**
 
 
 
 Notes: Error handling
 
 ###Cfcatch###
-*Description:*
-*Usage:*
-*Notes:* There is also a tag called cfcatch
-*Example:*
+**Description:**
+**Usage:**
+**Notes:** There is also a tag called cfcatch
+**Example:**
+
 
 
 
