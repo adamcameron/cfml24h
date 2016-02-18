@@ -13,7 +13,7 @@ I'll quickly run through some terms though.
 
 A class is the definition of some data and some behaviour that that data has to represent an object of some description. For some reason in CFML classes are called components, but I think that's pretty poor and slightly misleading nomenclature, so I'll stick with the term "class" in this text.
 
-In CFML, for all intents and purposes, a class is all the code within a CFC file. In some languages classes have runtime manifestations (eg, Java has a class [java.lang.Class](http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html), and one can instantiate Class objects and call methods on them). One cannot do this in CFML. So just think of the class or the component as the code that represents it. It does not really have any runtime representation.
+In CFML, for all intents and purposes, a class is all the code within a CFC file (ie: a file with a .cfc file extension, eg: MyClass.cfc). In some languages classes have runtime manifestations (eg, Java has a class [java.lang.Class](http://docs.oracle.com/javase/8/docs/api/java/lang/Class.html), and one can instantiate Class objects and call methods on them). One cannot do this in CFML. So just think of the class or the component as the code that represents it. It does not really have any runtime representation.
 
 Classes comprise properties and methods (see below).
 
