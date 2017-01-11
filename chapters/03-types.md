@@ -774,7 +774,7 @@ writeOutput(fullName[keyName]); // using the above example, this outputs "Peter"
 
 The key can be a variable, an expression which evaluates to a string, or a string-literal.
 
-Secondly, when using associative array notation, they casing of the key is preserved. This is useful when creating data which will be shared with case-sensitive systems. EG:
+Secondly, when using associative array notation, the casing of the key is preserved. This is useful when creating data which will be shared with case-sensitive systems. EG:
 
 ````cfc
 fullName = {};
